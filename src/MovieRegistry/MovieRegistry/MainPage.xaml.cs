@@ -36,10 +36,7 @@ namespace MovieRegistry
 
             Movies = new ObservableCollection<MovieViewModel>(Registry.GetInstance().GetLatestEpisodes().Select(m => MovieViewModel.FromDomainModel(m)));
 
-
-
             Loaded += MainPage_Loaded;
-
         }
         
 
@@ -50,6 +47,9 @@ namespace MovieRegistry
 
             Movies[0].Name = manager.Series.Title;
             Movies[1].Name = manager.Series.Description;
+
+            lvLatest.Visibility = Visibility.Visible;
+            prLatest.IsActive = false;
         }
 
         private void AppBarButton_Click(object sender, RoutedEventArgs e)

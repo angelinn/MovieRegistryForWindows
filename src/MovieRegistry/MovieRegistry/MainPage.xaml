@@ -11,22 +11,26 @@
             <AppBarButton Icon="Setting" Label="Options" Click="AppBarButton_Click" />
         </CommandBar>
     </Page.BottomAppBar>
-
     <Pivot Name="pvMain" Title="Movie Registry" Background="White">
         <PivotItem Header="Latest">
-            <ListView Name="lvLatest" ItemsSource="{Binding Movies}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Name}" Foreground="Black"></TextBlock>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <Grid>
+
+                <ProgressRing x:Name="prLatest" HorizontalAlignment="Center" VerticalAlignment="Center" IsActive="True" Height="100" Width="100"/>
+
+                <ListView x:Name="lvLatest" ItemsSource="{Binding Movies}" Visibility="Collapsed">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" Foreground="Black"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
         </PivotItem>
         <PivotItem Header="Add entry">
-            
+
         </PivotItem>
         <PivotItem Header="Did I see that?">
-            
+
         </PivotItem>
     </Pivot>
 </Page>
