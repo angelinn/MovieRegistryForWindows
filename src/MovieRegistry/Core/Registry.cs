@@ -18,6 +18,16 @@ namespace Core
             return instance;
         }
 
+        public void RegisterUser(string name)
+        {
+
+        }
+
+        public void AddMovie(string id, string seenAt, bool isSeries, int season = 0, int episode = 0)
+        {
+
+        }
+
         public IEnumerable<MovieDO> GetLatestEpisodes()
         {
             return new List<MovieDO>

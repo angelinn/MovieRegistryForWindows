@@ -1,6 +1,7 @@
 ﻿{
   "dependencies": {
-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0"
+    "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
+    "TheTVDBSharp.UAP": "1.1.5613.26434"
   },
   "frameworks": {
     "uap10.0": {}
