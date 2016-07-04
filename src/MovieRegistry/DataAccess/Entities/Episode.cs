@@ -6,17 +6,16 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Entities
 {
-    public class Movie : BaseEntity
+    public class Episode : BaseEntity
     {
-        public Movie()
+        public Episode()
         {
             Records = new HashSet<Record>();
         }
 
         public int ID { get; set; }
-        public string Title { get; set; }
-        public int Year { get; set; }
-        public string ImdbID { get; set; }
+        public int Season { get; set; }
+        public int Serie { get; set; }
 
         public virtual ICollection<Record> Records { get; set; }
 

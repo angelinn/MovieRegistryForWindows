@@ -11,14 +11,14 @@ namespace DataAccess.Domain
     {
         public MovieDO()
         {
-            movie = new Movie { ID = 0, Name = "Kewl Movie" };
+            movie = new Movie { ID = 0, Title = "Kewl Movie" };
         }
 
         public string Name
         {
             get
             {
-                return movie.Name;
+                return movie.Title;
             }
         }
 

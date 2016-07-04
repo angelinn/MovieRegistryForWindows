@@ -18,11 +18,35 @@ namespace DataAccess.Repositories
         public UnitOfWork() : this(new MovieRegistryContext())
         { }
 
-        public IGenericRepository<Movie> MemoryTypes
+        public IGenericRepository<Movie> Movies
         {
             get
             {
                 return GetRepository<Movie>();
+            }
+        }
+
+        public IGenericRepository<WindowsUser> Users
+        {
+            get
+            {
+                return GetRepository<WindowsUser>();
+            }
+        }
+
+        public IGenericRepository<Record> Records
+        {
+            get
+            {
+                return GetRepository<Record>();
+            }
+        }
+
+        public IGenericRepository<Episode> Episodes
+        {
+            get
+            {
+                return GetRepository<Episode>();
             }
         }
 
