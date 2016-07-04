@@ -26,7 +26,7 @@ namespace DataAccess.Repositories
             }
         }
 
-        private IGenericRepository<T> GetRepository<T>() where T : class
+        private IGenericRepository<T> GetRepository<T>() where T : class, BaseEntity
         {
             if (!repositories.ContainsKey(typeof(T)))
             {

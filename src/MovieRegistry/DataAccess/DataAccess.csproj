@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\MovieDO.cs" />
+    <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\Movie.cs" />
     <Compile Include="MovieRegistryContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

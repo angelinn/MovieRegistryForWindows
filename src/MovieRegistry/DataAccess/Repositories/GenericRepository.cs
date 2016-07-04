@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.Entity;
+﻿using DataAccess.Entities;
+using Microsoft.Data.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    public class GenericRepository<T> : IGenericRepository<T> where T : class, BaseEntity
     {
         public GenericRepository(MovieRegistryContext context)
         {
@@ -33,7 +34,7 @@ namespace DataAccess.Repositories
 
         public T FindById(int id)
         {
-            return context.Set<T>().Find(id);
+            return context.Set<T>().FirstOrDefault(i => i.GetId() == id);
         }
 
         public void Save()
