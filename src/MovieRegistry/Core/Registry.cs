@@ -8,12 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using TheTVDBSharp;
 using Core.Extensions;
+using Core.Managers;
 
 namespace Core
 {
     public class Registry
     {
-
         public static Registry GetInstance()
         {
             if (instance == null)
@@ -31,6 +31,7 @@ namespace Core
                 {
                     user = new WindowsUser { Name = name };
                     uow.Users.Add(user);
+                    uow.Save();
                 }
             }
         }
@@ -54,9 +55,9 @@ namespace Core
             }
         }
 
-        private void EpisodeExists(string title, int season, int episode)
+        private bool EpisodeExists(string title, int season, int episode)
         {
-
+            return new TvdbManager(title).EpisodeExists(season, episode);
         }
 
         private Dictionary<string, IEnumerable<Record>> FetchLatest()
@@ -70,7 +71,7 @@ namespace Core
 
         private Registry()
         { }
-
+        
         private WindowsUser user;
         private static Registry instance;
     }
