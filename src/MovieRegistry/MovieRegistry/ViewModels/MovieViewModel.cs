@@ -13,7 +13,7 @@ namespace MovieRegistry.ViewModels
         {
             return new MovieViewModel
             {
-                Name = domain.Movie.Name
+                Name = domain.Name
             };
         }
 

@@ -1,4 +1,4 @@
-﻿using DataAccess.Models;
+﻿using DataAccess.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +9,19 @@ namespace DataAccess.Domain
 {
     public class MovieDO
     {
-        public Movie Movie { get; set; }
+        public MovieDO()
+        {
+            movie = new Movie { ID = 0, Name = "Kewl Movie" };
+        }
+
+        public string Name
+        {
+            get
+            {
+                return movie.Name;
+            }
+        }
+
+        private Movie movie;
     }
 }

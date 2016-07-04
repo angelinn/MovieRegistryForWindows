@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Models
+namespace DataAccess.Entities
 {
-    public class Movie
+    internal class Movie
     {
         public int ID { get; set; }
         public string Name { get; set; }

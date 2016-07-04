@@ -137,11 +137,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj">
-      <Project>{ba1c1d31-176a-4643-a092-1d6e4e13895e}</Project>
+      <Project>{df2b5e5e-7ab8-4534-827e-9243e96cc71f}</Project>
       <Name>Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\DataAccess\DataAccess.csproj">
-      <Project>{6bdea209-a96f-400a-95df-43d551d6afb9}</Project>
+      <Project>{8a149d32-e551-41cc-9805-55271a409b57}</Project>
       <Name>DataAccess</Name>
     </ProjectReference>
   </ItemGroup>

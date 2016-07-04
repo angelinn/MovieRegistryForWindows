@@ -22,8 +22,8 @@ namespace Core
         {
             return new List<MovieDO>
             {
-                new MovieDO { Movie = new DataAccess.Models.Movie { ID = 0, Name = "American Pie" } },
-                new MovieDO { Movie = new DataAccess.Models.Movie { ID = 1, Name = "Game of Thrones" } }
+                new MovieDO(),
+                new MovieDO()
             };
         }
 

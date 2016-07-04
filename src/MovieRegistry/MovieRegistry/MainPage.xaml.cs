@@ -1,7 +1,5 @@
 ﻿using Core;
 using DataAccess;
-using DataAccess.Domain;
-using DataAccess.Models;
 using MovieRegistry.ViewModels;
 using System;
 using System.Collections.Generic;
