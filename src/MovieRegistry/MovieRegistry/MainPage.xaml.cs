@@ -1,4 +1,5 @@
 ﻿using Core;
+using Core.Managers;
 using DataAccess;
 using MovieRegistry.ViewModels;
 using System;
@@ -34,6 +35,7 @@ namespace MovieRegistry
             DataContext = this;
 
             Movies = new ObservableCollection<MovieViewModel>(Registry.GetInstance().GetLatestEpisodes().Select(m => MovieViewModel.FromDomainModel(m)));
+            TvdbManager manager = new TvdbManager("Friends");
         }
 
         private void AppBarButton_Click(object sender, RoutedEventArgs e)
