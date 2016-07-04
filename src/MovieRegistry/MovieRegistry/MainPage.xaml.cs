@@ -35,7 +35,19 @@ namespace MovieRegistry
             DataContext = this;
 
             Movies = new ObservableCollection<MovieViewModel>(Registry.GetInstance().GetLatestEpisodes().Select(m => MovieViewModel.FromDomainModel(m)));
+
+
+
+            Loaded += MainPage_Loaded;
+
+        }
+        
+
+        private async void MainPage_Loaded(object sender, RoutedEventArgs e)
+        {
             TvdbManager manager = new TvdbManager("Friends");
+            await manager.Load();
+
             Movies[0].Name = manager.Series.Title;
             Movies[1].Name = manager.Series.Description;
         }

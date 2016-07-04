@@ -14,8 +14,6 @@ namespace Core.Managers
         {
             this.title = title;
             this.imdbID = imdbID;
-
-            Load();
         }
 
         public void CheckForNewEpisodes(int lastSeason, int lastEpisode)
@@ -26,14 +24,16 @@ namespace Core.Managers
         public bool EpisodeExists(int season, int episode)
         {
             return true;
+            //return series.Episodes.Any(e => e.)
         }
 
-        private void Load()
+        public async Task Load()
         {
             manager = new TheTvdbManager(API_KEY);
-            IReadOnlyCollection<Series>  allSeries = manager.SearchSeries(title, Language.English).Result;
+            IReadOnlyCollection<Series>  allSeries = await manager.SearchSeries(title, Language.English);
             
             series = (imdbID == null) ? allSeries.FirstOrDefault() : allSeries.Where(s => s.ImdbId == imdbID).FirstOrDefault();
+            series = await manager.GetSeries(series.Id, Language.English);
         }
 
         public Series Series
