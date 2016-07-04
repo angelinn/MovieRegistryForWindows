@@ -8,24 +8,25 @@
     mc:Ignorable="d">
     <Page.BottomAppBar>
         <CommandBar>
-            <CommandBar.Content>
-                <Grid/>
-            </CommandBar.Content>
-            <AppBarButton Icon="Setting" Label="Settings" />
+            <AppBarButton Icon="Setting" Label="Options" Click="AppBarButton_Click" />
         </CommandBar>
     </Page.BottomAppBar>
 
-    <Grid Background="White" FlyoutBase.AttachedFlyout="{StaticResource mfMenu}">
-        <Pivot Title="Pivot">
-            <PivotItem Header="Movie Registry">
-                <Grid/>
-            </PivotItem>
-            <PivotItem Header="Add entry">
-                <Grid/>
-            </PivotItem>
-            <PivotItem Header="Did I see that?">
-                <Grid/>
-            </PivotItem>
-        </Pivot>
-    </Grid>
+    <Pivot Name="pvMain" Title="Movie Registry" Background="White">
+        <PivotItem Header="Latest">
+            <ListView Name="lvLatest" ItemsSource="{Binding Movies}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" Foreground="Black"></TextBlock>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </PivotItem>
+        <PivotItem Header="Add entry">
+            
+        </PivotItem>
+        <PivotItem Header="Did I see that?">
+            
+        </PivotItem>
+    </Pivot>
 </Page>

@@ -1,5 +1,11 @@
-﻿using System;
+﻿using Core;
+using DataAccess;
+using DataAccess.Domain;
+using DataAccess.Models;
+using MovieRegistry.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -22,9 +28,19 @@ namespace MovieRegistry
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public ObservableCollection<MovieViewModel> Movies { get; set; }
+
         public MainPage()
         {
             this.InitializeComponent();
+            DataContext = this;
+
+            Movies = new ObservableCollection<MovieViewModel>(Registry.GetInstance().GetLatestEpisodes().Select(m => MovieViewModel.FromDomainModel(m)));
+        }
+
+        private void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Options));
         }
     }
 }

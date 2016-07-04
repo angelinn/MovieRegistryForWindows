@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess
+namespace DataAccess.Models
 {
-    public class Registry
+    public class Movie
     {
+        public int ID { get; set; }
+        public string Name { get; set; }
     }
 }
