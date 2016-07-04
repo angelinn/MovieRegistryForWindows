@@ -10,9 +10,10 @@ namespace Core.Managers
 {
     public class TvdbManager
     {
-        public TvdbManager(string title)
+        public TvdbManager(string title, string imdbID = null)
         {
             this.title = title;
+            this.imdbID = imdbID;
 
             Load();
         }
@@ -30,12 +31,23 @@ namespace Core.Managers
         private void Load()
         {
             manager = new TheTvdbManager(API_KEY);
-            allSeries = manager.SearchSeries(title, Language.English).Result;
+            IReadOnlyCollection<Series>  allSeries = manager.SearchSeries(title, Language.English).Result;
+            
+            series = (imdbID == null) ? allSeries.FirstOrDefault() : allSeries.Where(s => s.ImdbId == imdbID).FirstOrDefault();
         }
 
-        private IReadOnlyCollection<Series> allSeries;
+        public Series Series
+        {
+            get
+            {
+                return series;
+            }
+        }
+
+        private Series series;
         private TheTvdbManager manager;
         private string title;
+        private string imdbID;
         private const string API_KEY = "51AEE5CAE610F84E";
     }
 }

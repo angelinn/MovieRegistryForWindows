@@ -36,6 +36,8 @@ namespace MovieRegistry
 
             Movies = new ObservableCollection<MovieViewModel>(Registry.GetInstance().GetLatestEpisodes().Select(m => MovieViewModel.FromDomainModel(m)));
             TvdbManager manager = new TvdbManager("Friends");
+            Movies[0].Name = manager.Series.Title;
+            Movies[1].Name = manager.Series.Description;
         }
 
         private void AppBarButton_Click(object sender, RoutedEventArgs e)
