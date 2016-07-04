@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using TheTVDBSharp.Models;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -43,7 +44,19 @@ namespace MovieRegistry
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             TvdbManager manager = new TvdbManager("Friends");
-            await manager.Load();
+
+            try
+            {
+                await manager.Load();
+            }
+            catch(ServerNotAvailableException)
+            {
+                Movies[0].Name = "Connection not available.";
+
+                lvLatest.Visibility = Visibility.Visible;
+                prLatest.IsActive = false;
+                return;
+            }
 
             Movies[0].Name = manager.Series.Title;
             Movies[1].Name = manager.Series.Description;
