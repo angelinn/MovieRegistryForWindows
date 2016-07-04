@@ -6,8 +6,26 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Page.BottomAppBar>
+        <CommandBar>
+            <CommandBar.Content>
+                <Grid/>
+            </CommandBar.Content>
+            <AppBarButton Icon="Setting" Label="Settings" />
+        </CommandBar>
+    </Page.BottomAppBar>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    <Grid Background="White" FlyoutBase.AttachedFlyout="{StaticResource mfMenu}">
+        <Pivot Title="Pivot">
+            <PivotItem Header="Movie Registry">
+                <Grid/>
+            </PivotItem>
+            <PivotItem Header="Add entry">
+                <Grid/>
+            </PivotItem>
+            <PivotItem Header="Did I see that?">
+                <Grid/>
+            </PivotItem>
+        </Pivot>
     </Grid>
 </Page>
