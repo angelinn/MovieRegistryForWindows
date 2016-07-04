@@ -24,7 +24,15 @@ namespace Core
 
         public void RegisterUser(string name)
         {
-
+            using (UnitOfWork uow = new UnitOfWork())
+            {
+                user = uow.Users.Where(u => u.Name == name).FirstOrDefault();
+                if (user == null)
+                {
+                    user = new WindowsUser { Name = name };
+                    uow.Users.Add(user);
+                }
+            }
         }
 
         public void AddMovie(string id, string seenAt, bool isSeries, int season = 0, int episode = 0)
@@ -44,6 +52,11 @@ namespace Core
                     new MovieDO()
                 };
             }
+        }
+
+        private void EpisodeExists(string title, int season, int episode)
+        {
+
         }
 
         private Dictionary<string, IEnumerable<Record>> FetchLatest()
