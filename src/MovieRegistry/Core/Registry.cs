@@ -1,10 +1,13 @@
 ﻿using DataAccess.Domain;
+using DataAccess.Entities;
+using DataAccess.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TheTVDBSharp;
+using Core.Extensions;
 
 namespace Core
 {
@@ -31,16 +34,31 @@ namespace Core
 
         public IEnumerable<MovieDO> GetLatestEpisodes()
         {
-            return new List<MovieDO>
+            using (UnitOfWork uow = new UnitOfWork())
             {
-                new MovieDO(),
-                new MovieDO()
+                IEnumerable<Record> series = user.Records.Where(r => r.IsSeries == true);
+
+                return new List<MovieDO>
+                {
+                    new MovieDO(),
+                    new MovieDO()
+                };
+            }
+        }
+
+        private Dictionary<string, IEnumerable<Record>> FetchLatest()
+        {
+            return new Dictionary<string, IEnumerable<Record>>
+            {
+                { "movies", user.Records.Where(r => r.IsSeries == false).TakeLast(5) },
+                { "series", user.Records.Where(r => r.IsSeries == true).TakeLast(5)  }
             };
         }
 
         private Registry()
         { }
 
+        private WindowsUser user;
         private static Registry instance;
     }
 }

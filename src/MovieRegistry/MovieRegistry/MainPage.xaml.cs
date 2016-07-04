@@ -48,21 +48,20 @@ namespace MovieRegistry
             try
             {
                 await manager.Load();
+                Movies[0].Name = manager.Series.Title;
+                Movies[1].Name = manager.Series.Description;
             }
             catch(ServerNotAvailableException)
             {
                 Movies[0].Name = "Connection not available.";
-
-                lvLatest.Visibility = Visibility.Visible;
-                prLatest.IsActive = false;
                 return;
             }
+            finally
+            {
+                lvLatest.Visibility = Visibility.Visible;
+                prLatest.IsActive = false;
+            }
 
-            Movies[0].Name = manager.Series.Title;
-            Movies[1].Name = manager.Series.Description;
-
-            lvLatest.Visibility = Visibility.Visible;
-            prLatest.IsActive = false;
         }
 
         private void AppBarButton_Click(object sender, RoutedEventArgs e)

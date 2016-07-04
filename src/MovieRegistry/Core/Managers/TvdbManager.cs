@@ -16,24 +16,34 @@ namespace Core.Managers
             this.imdbID = imdbID;
         }
 
-        public void CheckForNewEpisodes(int lastSeason, int lastEpisode)
+        public IEnumerable<Episode> CheckForNewEpisodes(int lastSeason, int lastEpisode)
         {
+            if (HasFinished(lastSeason, lastEpisode))
+                return null;
 
+            Episode current = series.Episodes.Where(e => e.SeasonNumber == lastSeason && e.Number == lastEpisode).FirstOrDefault();
+            if (current == null)
+                return null;
+
+            return null;
         }
             
         public bool EpisodeExists(int season, int episode)
         {
-            return true;
-            //return series.Episodes.Any(e => e.)
+            return series.Episodes.Any(e => e.SeasonNumber == season && e.Number == episode);
         }
 
         public async Task Load()
         {
-            manager = new TheTvdbManager(API_KEY);
-            IReadOnlyCollection<Series>  allSeries = await manager.SearchSeries(title, Language.English);
-            
-            series = (imdbID == null) ? allSeries.FirstOrDefault() : allSeries.Where(s => s.ImdbId == imdbID).FirstOrDefault();
-            series = await manager.GetSeries(series.Id, Language.English);
+            if (!loaded)
+            {
+                manager = new TheTvdbManager(API_KEY);
+                IReadOnlyCollection<Series> allSeries = await manager.SearchSeries(title, Language.English);
+
+                series = (imdbID == null) ? allSeries.FirstOrDefault() : allSeries.Where(s => s.ImdbId == imdbID).FirstOrDefault();
+                series = await manager.GetSeries(series.Id, Language.English);
+                loaded = true;
+            }
         }
 
         public Series Series
@@ -44,6 +54,12 @@ namespace Core.Managers
             }
         }
 
+        private bool HasFinished(int season, int episode)
+        {
+            return series.Episodes.OrderBy(e => e.SeasonNumber).Last().Number == episode;
+        }
+
+        private bool loaded;
         private Series series;
         private TheTvdbManager manager;
         private string title;
