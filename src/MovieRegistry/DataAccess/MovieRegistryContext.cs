@@ -11,6 +11,9 @@ namespace DataAccess
     public class MovieRegistryContext : DbContext
     {
         public DbSet<Movie> Movies { get; set; }
+        public DbSet<WindowsUser> Users { get; set; }
+        public DbSet<Record> Records { get; set; }
+        public DbSet<Episode> Episodes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
