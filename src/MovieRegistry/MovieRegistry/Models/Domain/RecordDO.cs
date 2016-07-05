@@ -1,4 +1,5 @@
 ﻿using MovieRegistry.Models.Entities;
+using MovieRegistry.Models.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,15 +10,28 @@ namespace MovieRegistry.Models.Domain
 {
     public class RecordDO
     {
-        public static Record Create(bool isSeries, DateTime when, int movie, WindowsUser user)
+        public static bool TryCreate(bool isSeries, DateTime when, int movie, WindowsUser user)
         {
-            return new Record
+            using (UnitOfWork uow = new UnitOfWork())
             {
-                IsSeries = isSeries,
-                SeenAt = when,
-                MovieID = movie,
-                UserID = user.ID
-            };
+                Record record = uow.Records.Where(r => r.IsSeries == false && r.MovieID == movie).FirstOrDefault();
+                if (record == null)
+                {
+                    record = new Record
+                    {
+                        IsSeries = isSeries,
+                        SeenAt = when,
+                        MovieID = movie,
+                        UserID = user.ID
+                    };
+
+                    uow.Records.Add(record);
+                    uow.Save();
+
+                    return true;
+                }
+                return false;
+            }
         }
     }
 }

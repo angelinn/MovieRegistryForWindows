@@ -44,16 +44,13 @@ namespace MovieRegistry
 
         private async void btnAddEntry_Click(object sender, RoutedEventArgs e)
         {
-            using (UnitOfWork uow = new UnitOfWork())
-            {
-                Movie movie = MovieDO.FindOrCreate(Search.ImdbID, Search.Title, Search.Year);
-                Record record = RecordDO.Create(false, DateTime.Now, movie.ID, UserDO.GetUser());
-                
-                uow.Records.Add(record);
-                uow.Save();
-            }
+            Movie movie = MovieDO.FindOrCreate(Search.ImdbID, Search.Title, Search.Year);
+            bool created = RecordDO.TryCreate(false, DateTime.Now, movie.ID, UserDO.GetUser());
 
-            MessageDialog dialog = new MessageDialog(String.Format("{0} successfully added at {1}.", Search.Title, DateTime.Now));
+            string message = created ? String.Format("{0} successfully added at {1}.", Search.Title, DateTime.Now)
+                                     : String.Format("{0} already exists!", Search.Title);
+
+            MessageDialog dialog = new MessageDialog(message);
             await dialog.ShowAsync();
         }
     }
