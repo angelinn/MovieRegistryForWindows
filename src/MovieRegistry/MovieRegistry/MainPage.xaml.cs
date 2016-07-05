@@ -116,10 +116,12 @@ namespace MovieRegistry
 
         private async void lvSearchResults_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SearchResultViewModel selected = (SearchResultViewModel)e.AddedItems.First();
-            var detailed = await new ImdbManager().GetById(selected.ImdbID);
-
-            Frame.Navigate(typeof(SearchResult), new SearchResultViewModel(detailed));
+            SearchResultViewModel selected = (SearchResultViewModel)e.AddedItems.FirstOrDefault();
+            if (selected != null)
+            {
+                var detailed = await new ImdbManager().GetById(selected.ImdbID);
+                Frame.Navigate(typeof(SearchResult), new SearchResultViewModel(detailed));
+            }
         }
 
         private void txtEntryName_KeyUp(object sender, KeyRoutedEventArgs e)

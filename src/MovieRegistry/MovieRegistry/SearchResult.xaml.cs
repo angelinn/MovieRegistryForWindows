@@ -45,7 +45,16 @@ namespace MovieRegistry
         private async void btnAddEntry_Click(object sender, RoutedEventArgs e)
         {
             Movie movie = MovieDO.FindOrCreate(Search.ImdbID, Search.Title, Search.Year);
-            bool created = RecordDO.TryCreate(false, DateTime.Now, movie.ID, UserDO.GetUser());
+
+            Episode episode = null;
+            bool isSeries = Search.Type != "movie";
+            if (isSeries)
+            {
+                episode = new Episode();
+
+            }
+
+            bool created = RecordDO.TryCreate(isSeries, DateTime.Now, movie, UserDO.GetUser());
 
             string message = created ? String.Format("{0} successfully added at {1}.", Search.Title, DateTime.Now)
                                      : String.Format("{0} already exists!", Search.Title);

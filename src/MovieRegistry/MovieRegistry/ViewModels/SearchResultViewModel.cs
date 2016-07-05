@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 
 namespace MovieRegistry.ViewModels
 {
@@ -22,6 +23,7 @@ namespace MovieRegistry.ViewModels
             Year = Char.IsDigit(omdbItem.Year.Last()) ? omdbItem.Year : omdbItem.Year.Substring(0, omdbItem.Year.Length - 1);
             Poster = omdbItem.Poster;
             Plot = omdbItem.Plot;
+            Type = omdbItem.Type;
         }
 
         public SearchResultViewModel(OMDbSharp.Search omdbSearch)
@@ -30,6 +32,14 @@ namespace MovieRegistry.ViewModels
             Title = omdbSearch.Title;
             ImdbID = omdbSearch.imdbID;
             Type = omdbSearch.Type;
+        }
+
+        public Visibility TvShow
+        {
+            get
+            {
+                return Type == "movie" ? Visibility.Collapsed : Visibility.Visible;
+            }
         }
 
         private string plot;

@@ -10,18 +10,18 @@ namespace MovieRegistry.Models.Domain
 {
     public class RecordDO
     {
-        public static bool TryCreate(bool isSeries, DateTime when, int movie, WindowsUser user)
+        public static bool TryCreate(bool isSeries, DateTime when, Movie movie, WindowsUser user)
         {
             using (UnitOfWork uow = new UnitOfWork())
             {
-                Record record = uow.Records.Where(r => r.IsSeries == false && r.MovieID == movie).FirstOrDefault();
+                Record record = uow.Records.Where(r => r.IsSeries == false && r.MovieID == movie.ID).FirstOrDefault();
                 if (record == null)
                 {
                     record = new Record
                     {
                         IsSeries = isSeries,
                         SeenAt = when,
-                        MovieID = movie,
+                        MovieID = movie.ID,
                         UserID = user.ID
                     };
 
