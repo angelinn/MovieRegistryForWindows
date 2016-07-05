@@ -49,12 +49,9 @@ namespace MovieRegistry
             Episode episode = null;
             bool isSeries = Search.Type != "movie";
             if (isSeries)
-            {
-                episode = new Episode();
+                episode = EpisodeDO.FindOrCreate(Int32.Parse(txtSeason.Text), Int32.Parse(txtEpisode.Text));
 
-            }
-
-            bool created = RecordDO.TryCreate(isSeries, DateTime.Now, movie, UserDO.GetUser());
+            bool created = RecordDO.TryCreate(isSeries, DateTime.Now, movie, UserDO.GetUser(), episode);
 
             string message = created ? String.Format("{0} successfully added at {1}.", Search.Title, DateTime.Now)
                                      : String.Format("{0} already exists!", Search.Title);

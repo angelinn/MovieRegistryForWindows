@@ -10,7 +10,7 @@ namespace MovieRegistry.Models.Domain
 {
     public class RecordDO
     {
-        public static bool TryCreate(bool isSeries, DateTime when, Movie movie, WindowsUser user)
+        public static bool TryCreate(bool isSeries, DateTime when, Movie movie, WindowsUser user, Episode episode)
         {
             using (UnitOfWork uow = new UnitOfWork())
             {
@@ -25,12 +25,24 @@ namespace MovieRegistry.Models.Domain
                         UserID = user.ID
                     };
 
+                    if (episode != null)
+                        record.EpisodeID = episode.ID;
+
                     uow.Records.Add(record);
                     uow.Save();
 
                     return true;
                 }
                 return false;
+            }
+        }
+
+        public static Episode GetEpisodeByMovie(Movie movie)
+        {
+            using (UnitOfWork uow = new UnitOfWork())
+            {
+                Record record = uow.Records.Where(r => r.MovieID == movie.ID).First();
+                return uow.Episodes.Where(e => e.ID == record.EpisodeID).FirstOrDefault();
             }
         }
     }

@@ -108,6 +108,7 @@
       <DependentUpon>20160705204504_MyFirstMigrations.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\MovieRegistryContextModelSnapshot.cs" />
+    <Compile Include="Models\Domain\EpisodeDO.cs" />
     <Compile Include="Models\Domain\MovieDO.cs" />
     <Compile Include="Models\Domain\RecordDO.cs" />
     <Compile Include="Models\Domain\UserDO.cs" />
@@ -125,9 +126,6 @@
       <DependentUpon>SearchResult.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\MovieViewModel.cs" />
-    <Compile Include="Options.xaml.cs">
-      <DependentUpon>Options.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\SearchResultViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
@@ -156,10 +154,6 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Options.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SearchResult.xaml">
       <SubType>Designer</SubType>

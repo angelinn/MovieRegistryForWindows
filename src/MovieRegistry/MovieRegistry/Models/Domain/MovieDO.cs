@@ -26,6 +26,14 @@ namespace MovieRegistry.Models.Domain
             }
         }
 
+        public static Movie FindByTitle(string title)
+        {
+            using (UnitOfWork uow = new UnitOfWork())
+            {
+                return uow.Movies.Where(m => m.Title == title).FirstOrDefault();
+            }
+        }
+
         public string Name
         {
             get

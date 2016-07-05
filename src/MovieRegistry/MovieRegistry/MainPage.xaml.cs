@@ -1,5 +1,6 @@
 ﻿using MovieRegistry.Managers;
 using MovieRegistry.Models.Domain;
+using MovieRegistry.Models.Entities;
 using MovieRegistry.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using TheTVDBSharp.Models;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -19,6 +21,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+
+using EpisodeEntity = MovieRegistry.Models.Entities.Episode;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -38,7 +42,6 @@ namespace MovieRegistry
                 return UserDO.GetUser().Name;
             }
         }
-
 
         public MainPage()
         {
@@ -75,11 +78,6 @@ namespace MovieRegistry
                 prLatest.IsActive = false;
             }
 
-        }
-
-        private void AppBarButton_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(Options));
         }
 
         private async void btnSearch_Click(object sender, RoutedEventArgs e)
@@ -132,6 +130,29 @@ namespace MovieRegistry
                 InputPane.GetForCurrentView().TryHide();
             }
 
+        }
+
+        private async void btnDidISee_Click(object sender, RoutedEventArgs e)
+        {
+            string title = txtDidISee.Text;
+            Movie movie = MovieDO.FindByTitle(title);
+
+            string message = String.Empty;
+            if (movie == null)
+            {
+                message = String.Format("You haven't seen {0}", title);
+            }
+            else
+            {
+                EpisodeEntity episode = RecordDO.GetEpisodeByMovie(movie);
+                if (episode == null)
+                    message = "You have seen that one!";
+                else
+                    message = String.Format("Last episode you saw was S{0}E{1}", episode.Season, episode.Serie);
+            }
+
+            MessageDialog dialog = new MessageDialog(message);
+            await dialog.ShowAsync();
         }
     }
 }
