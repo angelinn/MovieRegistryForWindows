@@ -14,7 +14,6 @@
     <Pivot Name="pvMain" Title="Movie Registry" Background="White">
         <PivotItem Header="Latest">
             <Grid>
-
                 <ProgressRing x:Name="prLatest" HorizontalAlignment="Center" VerticalAlignment="Center" IsActive="True" Height="100" Width="100"/>
 
                 <ListView x:Name="lvLatest" ItemsSource="{Binding Movies}" Visibility="Collapsed">
@@ -32,7 +31,17 @@
                 <TextBox Name="txtEntryName" />
 
                 <Button Name="btnSearch" Click="btnSearch_Click" Content="Go!"></Button>
-                <TextBlock Name="tbResult" />
+                <ListView Name="lvSearchResults" ItemsSource="{Binding SearchResults}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Title}" Foreground="Black" />
+                                <TextBlock Text=" - " Foreground="Black" />
+                                <TextBlock Text="{Binding Year}" Foreground="Black"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
 
             </StackPanel>
         </PivotItem>

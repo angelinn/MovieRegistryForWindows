@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MovieRegistry.ViewModels
 {
-    public class MovieViewModel : ViewModelBase
+    public class MovieViewModel : NotifyingViewModel
     {
         public static MovieViewModel FromDomainModel(MovieDO domain)
         {

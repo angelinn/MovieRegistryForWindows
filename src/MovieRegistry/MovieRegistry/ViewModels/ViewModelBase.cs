@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MovieRegistry.ViewModels
 {
-    public abstract class ViewModelBase : INotifyPropertyChanged
+    public abstract class NotifyingViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

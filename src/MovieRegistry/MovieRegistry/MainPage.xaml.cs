@@ -29,6 +29,7 @@ namespace MovieRegistry
     public sealed partial class MainPage : Page
     {
         public ObservableCollection<MovieViewModel> Movies { get; set; }
+        public ObservableCollection<SearchResultViewModel> SearchResults { get; set; }
 
         public MainPage()
         {
@@ -36,6 +37,7 @@ namespace MovieRegistry
             DataContext = this;
 
             Movies = new ObservableCollection<MovieViewModel>(Registry.GetInstance().GetLatestEpisodes().Select(m => MovieViewModel.FromDomainModel(m)));
+            SearchResults = new ObservableCollection<SearchResultViewModel>();
 
             Loaded += MainPage_Loaded;
         }
@@ -72,9 +74,10 @@ namespace MovieRegistry
         private async void btnSearch_Click(object sender, RoutedEventArgs e)
         {
             ImdbManager imdb = new ImdbManager();
-            ImdbApiResponse result = await imdb.GetByTitle(txtEntryName.Text);
-
-            tbResult.Text = result.Title + " " + result.Director;
+            OMDbSharp.Search[] searchList = (await imdb.GetByTitle(txtEntryName.Text)).Search;
+            
+            foreach (var search in searchList)
+                SearchResults.Add(new SearchResultViewModel(search));
         }
     }
 }
