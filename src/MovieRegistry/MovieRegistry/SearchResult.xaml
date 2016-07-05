@@ -7,10 +7,21 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
-        <Image Source="{Binding Poster}" />
-        <TextBlock Text="{Binding Title}" />
-        <TextBlock Text="{Binding Year}" />
-        <TextBlock Text="{Binding Language}" />
-    </StackPanel>
+    <ScrollViewer>    
+        <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
+            <Image>
+                <Image.Source>
+                    <BitmapImage UriSource="{Binding Poster}" />
+                </Image.Source>
+            </Image>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Title}" FontSize="28px" />
+                <TextBlock Text="(" FontSize="28px"/>
+                <TextBlock Text="{Binding Year}" FontSize="28px"/>
+                <TextBlock Text=")" FontSize="28px"/>
+            </StackPanel>
+            <TextBlock Text="{Binding Language}" />
+        </StackPanel>
+    </ScrollViewer>
+
 </Page>

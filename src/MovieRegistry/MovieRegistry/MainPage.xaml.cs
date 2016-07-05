@@ -99,11 +99,8 @@ namespace MovieRegistry
         {
             Frame rootFrame = Window.Current.Content as Frame;
 
-            if (rootFrame.CanGoBack)
-            {
-                e.Handled = true;
-                rootFrame.GoBack();
-            }
+            e.Handled = true;
+            rootFrame.GoBack();
         }
 
         private async void lvSearchResults_SelectionChanged(object sender, SelectionChangedEventArgs e)
