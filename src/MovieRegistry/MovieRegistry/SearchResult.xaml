@@ -9,18 +9,19 @@
 
     <ScrollViewer>    
         <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
-            <Image>
-                <Image.Source>
-                    <BitmapImage UriSource="{Binding Poster}" />
-                </Image.Source>
-            </Image>
+            <Image Source="{Binding Poster}" Stretch="UniformToFill" />
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="{Binding Title}" FontSize="28px" />
-                <TextBlock Text="(" FontSize="28px"/>
+                <TextBlock Text=" (" FontSize="28px"/>
                 <TextBlock Text="{Binding Year}" FontSize="28px"/>
                 <TextBlock Text=")" FontSize="28px"/>
             </StackPanel>
-            <TextBlock Text="{Binding Language}" />
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Language:" />
+                <TextBlock Text="{Binding Language}" Margin="5,0,0,0" />
+            </StackPanel>
+            <TextBlock Text="{Binding Plot}" TextWrapping="Wrap" Margin="0,15,0,15" />
+            <Button Name="btnAddEntry" Content="Add to library" Click="btnAddEntry_Click" />
         </StackPanel>
     </ScrollViewer>
 

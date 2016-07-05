@@ -27,10 +27,10 @@
         </PivotItem>
         <PivotItem Header="Add entry">
             <StackPanel>
-                <TextBlock Text="Add a movie or tv series" />
-                <TextBox Name="txtEntryName" />
+                <TextBlock Text="Search for a movie or a show" />
+                <TextBox Name="txtEntryName"  KeyUp="txtEntryName_KeyUp"/>
 
-                <Button Name="btnSearch" Click="btnSearch_Click" Content="Go!"></Button>
+                <Button Name="btnSearch" Click="btnSearch_Click" Content="Go!" Margin="0,15,0,15"></Button>
 
                 <ProgressRing x:Name="prSearch" HorizontalAlignment="Center" VerticalAlignment="Center" Height="100" Width="100"/>
 

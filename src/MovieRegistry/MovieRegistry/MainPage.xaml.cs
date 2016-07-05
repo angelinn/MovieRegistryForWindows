@@ -1,6 +1,7 @@
 ﻿using Core;
 using Core.Managers;
 using DataAccess;
+using DataAccess.Domain;
 using MovieRegistry.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using TheTVDBSharp.Models;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -36,9 +38,12 @@ namespace MovieRegistry
         {
             this.InitializeComponent();
             DataContext = this;
+            NavigationCacheMode = NavigationCacheMode.Enabled;
 
             Movies = new ObservableCollection<MovieViewModel>();
             SearchResults = new ObservableCollection<SearchResultViewModel>();
+
+            UserDO.CreateOrSetUser("Angie");
 
             Loaded += MainPage_Loaded;
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
@@ -109,6 +114,16 @@ namespace MovieRegistry
             var detailed = await new ImdbManager().GetById(selected.ImdbID);
 
             Frame.Navigate(typeof(SearchResult), new SearchResultViewModel(detailed));
+        }
+
+        private void txtEntryName_KeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                btnSearch_Click(this, null);
+                InputPane.GetForCurrentView().TryHide();
+            }
+
         }
     }
 }

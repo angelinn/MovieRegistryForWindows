@@ -1,4 +1,5 @@
 ﻿using DataAccess.Entities;
+using DataAccess.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,20 @@ namespace DataAccess.Domain
 {
     public class MovieDO
     {
-        public MovieDO()
+        public static Movie FindOrCreate(string imdbId, string title, string year)
         {
-            movie = new Movie { ID = 0, Title = "Kewl Movie" };
+            using (UnitOfWork uow = new UnitOfWork())
+            {
+                Movie movie = uow.Movies.Where(m => m.ImdbID == imdbId).FirstOrDefault();
+                if (movie == null)
+                {
+                    movie = new Movie { ImdbID = imdbId, Title = title, Year = Int32.Parse(year) };
+                    uow.Movies.Add(movie);
+                    uow.Save();
+                }
+
+                return movie;
+            }
         }
 
         public string Name

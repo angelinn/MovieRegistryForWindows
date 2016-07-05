@@ -19,18 +19,35 @@ namespace MovieRegistry.ViewModels
             Title = omdbItem.Title;
             ImdbID = omdbItem.imdbID;
             ImdbRating = omdbItem.imdbRating;
-            Year = omdbItem.Year;
+            Year = Char.IsDigit(omdbItem.Year.Last()) ? omdbItem.Year : omdbItem.Year.Substring(0, omdbItem.Year.Length - 1);
             Poster = omdbItem.Poster;
+            Plot = omdbItem.Plot;
         }
 
         public SearchResultViewModel(OMDbSharp.Search omdbSearch)
         {
-            Year = omdbSearch.Year;
+            Year = Char.IsDigit(omdbSearch.Year.Last()) ? omdbSearch.Year : omdbSearch.Year.Substring(0, omdbSearch.Year.Length - 1);
             Title = omdbSearch.Title;
             ImdbID = omdbSearch.imdbID;
             Type = omdbSearch.Type;
         }
 
+        private string plot;
+        public string Plot
+        {
+            get
+            {
+                return plot;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    plot = value;
+                    OnPropertyChanged("Plot");
+                }
+            }
+        }
 
         private string country;
         public string Country

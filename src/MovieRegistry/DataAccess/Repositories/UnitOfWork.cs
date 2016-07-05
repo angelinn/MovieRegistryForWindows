@@ -18,6 +18,11 @@ namespace DataAccess.Repositories
         public UnitOfWork() : this(new MovieRegistryContext())
         { }
 
+        public void Migrate()
+        {
+
+        }
+
         public IGenericRepository<Movie> Movies
         {
             get
