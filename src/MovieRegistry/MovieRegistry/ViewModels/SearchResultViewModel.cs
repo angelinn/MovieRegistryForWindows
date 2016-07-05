@@ -8,6 +8,9 @@ namespace MovieRegistry.ViewModels
 {
     public class SearchResultViewModel : NotifyingViewModel
     {
+        public SearchResultViewModel()
+        {   }
+
         public SearchResultViewModel(OMDbSharp.Item omdbItem)
         {
             Country = omdbItem.Country;

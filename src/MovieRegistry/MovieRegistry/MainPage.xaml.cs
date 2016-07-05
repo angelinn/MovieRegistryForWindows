@@ -11,6 +11,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using TheTVDBSharp.Models;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -36,12 +37,12 @@ namespace MovieRegistry
             this.InitializeComponent();
             DataContext = this;
 
-            Movies = new ObservableCollection<MovieViewModel>(Registry.GetInstance().GetLatestEpisodes().Select(m => MovieViewModel.FromDomainModel(m)));
+            Movies = new ObservableCollection<MovieViewModel>();
             SearchResults = new ObservableCollection<SearchResultViewModel>();
 
             Loaded += MainPage_Loaded;
+            SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
         }
-        
 
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
@@ -50,17 +51,19 @@ namespace MovieRegistry
             try
             {
                 await manager.Load();
+
+                Movies.Add(new MovieViewModel());
+                Movies.Add(new MovieViewModel());
+
                 Movies[0].Name = manager.Series.Title;
                 Movies[1].Name = manager.Series.Description;
             }
             catch(ServerNotAvailableException)
             {
                 Movies[0].Name = "Connection not available.";
-                return;
             }
             finally
             {
-                lvLatest.Visibility = Visibility.Visible;
                 prLatest.IsActive = false;
             }
 
@@ -73,11 +76,37 @@ namespace MovieRegistry
 
         private async void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            ImdbManager imdb = new ImdbManager();
-            OMDbSharp.Search[] searchList = (await imdb.GetByTitle(txtEntryName.Text)).Search;
-            
-            foreach (var search in searchList)
-                SearchResults.Add(new SearchResultViewModel(search));
+            try
+            {
+                prSearch.IsActive = true;
+                SearchResults.Clear();
+
+                ImdbManager imdb = new ImdbManager();
+                OMDbSharp.Search[] searchList = (await imdb.GetByTitle(txtEntryName.Text)).Search;
+
+                foreach (var search in searchList)
+                    SearchResults.Add(new SearchResultViewModel(search));
+            }
+            catch (Exception)
+            {
+                SearchResults.Add(new SearchResultViewModel { Title = "Connection not available" });
+            }
+            finally
+            {
+                prSearch.IsActive = false;
+                prSearch.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void OnBackRequested(object sender, BackRequestedEventArgs e)
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+
+            if (rootFrame.CanGoBack)
+            {
+                e.Handled = true;
+                rootFrame.GoBack();
+            }
         }
     }
 }

@@ -13,8 +13,14 @@ namespace Core.Managers
     {
         public async Task<ItemList> GetByTitle(string title)
         {
-            OMDbClient omdb = new OMDbClient(false);
             return await omdb.GetItemList(title);
         }
+
+        public async Task<Item> GetById(string id)
+        {
+            return await omdb.GetItemByID(id);
+        }
+
+        private OMDbClient omdb = new OMDbClient(false);
     }
 }

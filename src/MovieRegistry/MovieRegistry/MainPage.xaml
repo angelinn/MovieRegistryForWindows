@@ -16,7 +16,7 @@
             <Grid>
                 <ProgressRing x:Name="prLatest" HorizontalAlignment="Center" VerticalAlignment="Center" IsActive="True" Height="100" Width="100"/>
 
-                <ListView x:Name="lvLatest" ItemsSource="{Binding Movies}" Visibility="Collapsed">
+                <ListView x:Name="lvLatest" ItemsSource="{Binding Movies}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Name}" Foreground="Black"/>
@@ -31,18 +31,19 @@
                 <TextBox Name="txtEntryName" />
 
                 <Button Name="btnSearch" Click="btnSearch_Click" Content="Go!"></Button>
-                <ListView Name="lvSearchResults" ItemsSource="{Binding SearchResults}">
+
+                <ProgressRing x:Name="prSearch" HorizontalAlignment="Center" VerticalAlignment="Center" Height="100" Width="100"/>
+
+                <ListView Name="lvSearchResults" ItemsSource="{Binding SearchResults}" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Title}" Foreground="Black" />
-                                <TextBlock Text=" - " Foreground="Black" />
+                                <TextBlock Text="{Binding Title}" Foreground="Black" Margin="0,0,5,0" />
                                 <TextBlock Text="{Binding Year}" Foreground="Black"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-
             </StackPanel>
         </PivotItem>
         <PivotItem Header="Did I see that?">
