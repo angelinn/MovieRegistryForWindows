@@ -12,7 +12,7 @@
         </CommandBar>
     </Page.BottomAppBar>
     <Pivot Name="pvMain" Title="Movie Registry" Background="White">
-        <PivotItem Header="Latest">
+        <PivotItem Header="{Binding UserName}">
             <Grid>
                 <ProgressRing x:Name="prLatest" HorizontalAlignment="Center" VerticalAlignment="Center" IsActive="True" Height="100" Width="100"/>
 

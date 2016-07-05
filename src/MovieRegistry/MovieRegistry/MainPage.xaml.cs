@@ -31,6 +31,14 @@ namespace MovieRegistry
     {
         public ObservableCollection<MovieViewModel> Movies { get; set; }
         public ObservableCollection<SearchResultViewModel> SearchResults { get; set; }
+        public string UserName
+        {
+            get
+            {
+                return UserDO.GetUser().Name;
+            }
+        }
+
 
         public MainPage()
         {

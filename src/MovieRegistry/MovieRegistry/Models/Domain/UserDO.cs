@@ -12,19 +12,26 @@ namespace MovieRegistry.Models.Domain
     {
         public static bool CreateOrSetUser(string name)
         {
-            using (UnitOfWork uow = new UnitOfWork())
+            try
             {
-                user = uow.Users.Where(u => u.Name == name).FirstOrDefault();
-                if (user == null)
+                using (UnitOfWork uow = new UnitOfWork())
                 {
-                    user = new WindowsUser { Name = name };
-                    uow.Users.Add(user);
-                    uow.Save();
+                    user = uow.Users.Where(u => u.Name == name).FirstOrDefault();
+                    if (user == null)
+                    {
+                        user = new WindowsUser { Name = name };
+                        uow.Users.Add(user);
+                        uow.Save();
 
-                    return true;
+                        return true;
+                    }
                 }
+                return false;
             }
-            return false;
+            catch (InvalidOperationException)
+            {
+                return false;
+            }
         }
 
         public static WindowsUser GetUser()
