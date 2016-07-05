@@ -25,7 +25,7 @@ namespace Core.Managers
             if (current == null)
                 return null;
 
-            return null;
+            return series.Episodes.Where(e => e.FirstAired > current.FirstAired && e.FirstAired < DateTime.Now);
         }
             
         public bool EpisodeExists(int season, int episode)

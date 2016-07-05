@@ -68,5 +68,13 @@ namespace MovieRegistry
         {
             Frame.Navigate(typeof(Options));
         }
+
+        private async void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            ImdbManager imdb = new ImdbManager();
+            ImdbApiResponse result = await imdb.GetByTitle(txtEntryName.Text);
+
+            tbResult.Text = result.Title + " " + result.Director;
+        }
     }
 }

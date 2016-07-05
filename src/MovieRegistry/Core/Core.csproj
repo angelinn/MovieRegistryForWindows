@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\IEnumerableTakeLast.cs" />
+    <Compile Include="Managers\ImdbManager.cs" />
     <Compile Include="Managers\TvdbManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registry.cs" />

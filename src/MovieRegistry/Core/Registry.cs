@@ -36,16 +36,45 @@ namespace Core
             }
         }
 
-        public void AddMovie(string id, string seenAt, bool isSeries, int season = 0, int episode = 0)
+        public async Task AddMovie(string title, string seenAt, bool isSeries, int season = 0, int episode = 0)
         {
+            if (isSeries && !await EpisodeExists(title, season, episode))
+                return;
 
+            // use IMDB here..
+
+            using (UnitOfWork uow = new UnitOfWork())
+            {
+                // Fix it
+                Episode series = null;
+                Movie movie = new Movie { };// imdb data.. };
+                uow.Movies.Add(movie);
+
+                if (isSeries)
+                {
+                    series = new Episode { };//tvdb data.. };
+                    uow.Episodes.Add(series);
+                }
+
+                Record record = new Record
+                {
+                    Movie = movie,
+                    Episode = series,
+                    IsSeries = isSeries,
+                    SeenAt = DateTime.Now,
+                    User = user
+                };
+
+                uow.Records.Add(record);
+                uow.Save();
+            }
         }
 
         public IEnumerable<MovieDO> GetLatestEpisodes()
         {
             using (UnitOfWork uow = new UnitOfWork())
             {
-                IEnumerable<Record> series = user.Records.Where(r => r.IsSeries == true);
+                //IEnumerable<Record> series = user.Records.Where(r => r.IsSeries == true);
 
                 return new List<MovieDO>
                 {
@@ -55,9 +84,12 @@ namespace Core
             }
         }
 
-        private bool EpisodeExists(string title, int season, int episode)
+        private async Task<bool> EpisodeExists(string title, int season, int episode)
         {
-            return new TvdbManager(title).EpisodeExists(season, episode);
+            TvdbManager tvdb = new TvdbManager(title);
+            await tvdb.Load();
+
+            return tvdb.EpisodeExists(season, episode);
         }
 
         private Dictionary<string, IEnumerable<Record>> FetchLatest()

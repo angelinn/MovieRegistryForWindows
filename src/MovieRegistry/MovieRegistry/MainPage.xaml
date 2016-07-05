@@ -27,7 +27,14 @@
             </Grid>
         </PivotItem>
         <PivotItem Header="Add entry">
+            <StackPanel>
+                <TextBlock Text="Add a movie or tv series" />
+                <TextBox Name="txtEntryName" />
 
+                <Button Name="btnSearch" Click="btnSearch_Click" Content="Go!"></Button>
+                <TextBlock Name="tbResult" />
+
+            </StackPanel>
         </PivotItem>
         <PivotItem Header="Did I see that?">
 
