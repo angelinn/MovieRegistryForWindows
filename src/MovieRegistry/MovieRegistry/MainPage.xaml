@@ -34,7 +34,7 @@
 
                 <ProgressRing x:Name="prSearch" HorizontalAlignment="Center" VerticalAlignment="Center" Height="100" Width="100"/>
 
-                <ListView Name="lvSearchResults" ItemsSource="{Binding SearchResults}" >
+                <ListView Name="lvSearchResults" ItemsSource="{Binding SearchResults}" SelectionChanged="lvSearchResults_SelectionChanged">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">

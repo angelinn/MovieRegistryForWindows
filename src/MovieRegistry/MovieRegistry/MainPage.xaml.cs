@@ -44,19 +44,16 @@ namespace MovieRegistry
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
         }
 
-        private async void MainPage_Loaded(object sender, RoutedEventArgs e)
+        private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             TvdbManager manager = new TvdbManager("Friends");
 
             try
             {
-                await manager.Load();
+                //await manager.Load();
 
                 Movies.Add(new MovieViewModel());
-                Movies.Add(new MovieViewModel());
-
-                Movies[0].Name = manager.Series.Title;
-                Movies[1].Name = manager.Series.Description;
+                Movies[0].Name = "No new episodes found.";
             }
             catch(ServerNotAvailableException)
             {
@@ -107,6 +104,14 @@ namespace MovieRegistry
                 e.Handled = true;
                 rootFrame.GoBack();
             }
+        }
+
+        private async void lvSearchResults_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SearchResultViewModel selected = (SearchResultViewModel)e.AddedItems.First();
+            var detailed = await new ImdbManager().GetById(selected.ImdbID);
+
+            Frame.Navigate(typeof(SearchResult), new SearchResultViewModel(detailed));
         }
     }
 }
