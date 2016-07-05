@@ -1,4 +1,5 @@
-﻿using MovieRegistry.Models.Domain;
+﻿using MovieRegistry.Managers;
+using MovieRegistry.Models.Domain;
 using MovieRegistry.Models.Entities;
 using MovieRegistry.Models.Repositories;
 using MovieRegistry.ViewModels;
@@ -34,30 +35,44 @@ namespace MovieRegistry
             this.InitializeComponent();
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             Search = (SearchResultViewModel)e.Parameter;
+            tvdb = new TvdbManager(Search.Title);
 
             DataContext = Search;
+            await tvdb.Load();
         }
 
         private async void btnAddEntry_Click(object sender, RoutedEventArgs e)
         {
-            Movie movie = MovieDO.FindOrCreate(Search.ImdbID, Search.Title, Search.Year);
-
             Episode episode = null;
             bool isSeries = Search.Type != "movie";
             if (isSeries)
-                episode = EpisodeDO.FindOrCreate(Int32.Parse(txtSeason.Text), Int32.Parse(txtEpisode.Text));
+            {
+                int season = Int32.Parse(txtSeason.Text);
+                int series = Int32.Parse(txtEpisode.Text);
+
+                if (!tvdb.EpisodeExists(season, series))
+                {
+                    await new MessageDialog("That episode does not exist.").ShowAsync();
+                    return;
+                }
+
+                episode = EpisodeDO.FindOrCreate(season, series);
+            }
+
+            Movie movie = MovieDO.FindOrCreate(Search.ImdbID, Search.Title, Search.Year);
 
             bool created = RecordDO.TryCreate(isSeries, DateTime.Now, movie, UserDO.GetUser(), episode);
 
             string message = created ? String.Format("{0} successfully added at {1}.", Search.Title, DateTime.Now)
                                      : String.Format("{0} already exists!", Search.Title);
-
-            MessageDialog dialog = new MessageDialog(message);
-            await dialog.ShowAsync();
+            
+            await new MessageDialog(message).ShowAsync();
         }
+
+        private TvdbManager tvdb;
     }
 }
