@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OMDbSharp;
 
-namespace Core.Managers
+namespace MovieRegistry.Managers
 {
     public class ImdbManager
     {

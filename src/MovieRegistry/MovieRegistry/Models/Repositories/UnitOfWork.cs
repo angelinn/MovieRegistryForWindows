@@ -1,11 +1,12 @@
-﻿using DataAccess.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using MovieRegistry.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Repositories
+namespace MovieRegistry.Models.Repositories
 {
     public class UnitOfWork : IDisposable
     {
@@ -20,7 +21,14 @@ namespace DataAccess.Repositories
 
         public void Migrate()
         {
+            try
+            {
+                context.Database.Migrate();
+            }
+            catch (InvalidOperationException)
+            {
 
+            }
         }
 
         public IGenericRepository<Movie> Movies

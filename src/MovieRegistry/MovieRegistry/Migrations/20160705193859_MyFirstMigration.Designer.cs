@@ -1,22 +1,22 @@
-using System;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Infrastructure;
-using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Migrations;
-using DataAccess;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
+using MovieRegistry.Models;
 
-namespace DataAccess.Migrations
+namespace MovieRegistry.Migrations
 {
     [DbContext(typeof(MovieRegistryContext))]
-    [Migration("20160705180506_MyFirstMigration")]
+    [Migration("20160705193859_MyFirstMigration")]
     partial class MyFirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0-rc1-16348");
+                .HasAnnotation("ProductVersion", "1.0.0-rtm-21431");
 
-            modelBuilder.Entity("DataAccess.Entities.Episode", b =>
+            modelBuilder.Entity("MovieRegistry.Models.Entities.Episode", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
@@ -26,9 +26,11 @@ namespace DataAccess.Migrations
                     b.Property<int>("Serie");
 
                     b.HasKey("ID");
+
+                    b.ToTable("Episodes");
                 });
 
-            modelBuilder.Entity("DataAccess.Entities.Movie", b =>
+            modelBuilder.Entity("MovieRegistry.Models.Entities.Movie", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
@@ -40,9 +42,11 @@ namespace DataAccess.Migrations
                     b.Property<int>("Year");
 
                     b.HasKey("ID");
+
+                    b.ToTable("Movies");
                 });
 
-            modelBuilder.Entity("DataAccess.Entities.Record", b =>
+            modelBuilder.Entity("MovieRegistry.Models.Entities.Record", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
@@ -58,9 +62,17 @@ namespace DataAccess.Migrations
                     b.Property<int?>("UserID");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("EpisodeID");
+
+                    b.HasIndex("MovieID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("Records");
                 });
 
-            modelBuilder.Entity("DataAccess.Entities.WindowsUser", b =>
+            modelBuilder.Entity("MovieRegistry.Models.Entities.WindowsUser", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
@@ -68,20 +80,22 @@ namespace DataAccess.Migrations
                     b.Property<string>("Name");
 
                     b.HasKey("ID");
+
+                    b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("DataAccess.Entities.Record", b =>
+            modelBuilder.Entity("MovieRegistry.Models.Entities.Record", b =>
                 {
-                    b.HasOne("DataAccess.Entities.Episode")
-                        .WithMany()
+                    b.HasOne("MovieRegistry.Models.Entities.Episode", "Episode")
+                        .WithMany("Records")
                         .HasForeignKey("EpisodeID");
 
-                    b.HasOne("DataAccess.Entities.Movie")
-                        .WithMany()
+                    b.HasOne("MovieRegistry.Models.Entities.Movie", "Movie")
+                        .WithMany("Records")
                         .HasForeignKey("MovieID");
 
-                    b.HasOne("DataAccess.Entities.WindowsUser")
-                        .WithMany()
+                    b.HasOne("MovieRegistry.Models.Entities.WindowsUser", "User")
+                        .WithMany("Records")
                         .HasForeignKey("UserID");
                 });
         }

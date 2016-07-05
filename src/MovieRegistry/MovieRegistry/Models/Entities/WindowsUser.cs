@@ -4,22 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Entities
+namespace MovieRegistry.Models.Entities
 {
-    public class Movie : BaseEntity
+    public class WindowsUser : BaseEntity
     {
-        public Movie()
+        public WindowsUser()
         {
             Records = new HashSet<Record>();
         }
 
         public int ID { get; set; }
-        public string Title { get; set; }
-        public int Year { get; set; }
-        public string ImdbID { get; set; }
+        public string Name { get; set; }
 
         public virtual ICollection<Record> Records { get; set; }
-
+        
         public int GetId()
         {
             return ID;

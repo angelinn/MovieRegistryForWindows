@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MovieRegistry.Models.Repositories;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -30,6 +31,11 @@ namespace MovieRegistry
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+            using (UnitOfWork uow = new UnitOfWork())
+            {
+                uow.Migrate();
+            }
         }
 
         /// <summary>

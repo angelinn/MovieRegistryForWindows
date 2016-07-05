@@ -1,12 +1,12 @@
-﻿using DataAccess.Entities;
-using DataAccess.Repositories;
+﻿using MovieRegistry.Models.Entities;
+using MovieRegistry.Models.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Domain
+namespace MovieRegistry.Models.Domain
 {
     public class MovieDO
     {

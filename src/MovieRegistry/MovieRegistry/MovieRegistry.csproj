@@ -89,15 +89,37 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <None Include="app.config" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\IEnumerableTakeLast.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Managers\ImdbManager.cs" />
+    <Compile Include="Managers\TvdbManager.cs" />
+    <Compile Include="Migrations\20160705193859_MyFirstMigration.cs" />
+    <Compile Include="Migrations\20160705193859_MyFirstMigration.designer.cs">
+      <DependentUpon>20160705193859_MyFirstMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\MovieRegistryContextModelSnapshot.cs" />
+    <Compile Include="Models\Domain\MovieDO.cs" />
+    <Compile Include="Models\Domain\RecordDO.cs" />
+    <Compile Include="Models\Domain\UserDO.cs" />
+    <Compile Include="Models\Entities\BaseEntity.cs" />
+    <Compile Include="Models\Entities\Episode.cs" />
+    <Compile Include="Models\Entities\Movie.cs" />
+    <Compile Include="Models\Entities\Record.cs" />
+    <Compile Include="Models\Entities\WindowsUser.cs" />
+    <Compile Include="Models\MovieRegistryContext.cs" />
+    <Compile Include="Models\Repositories\GenericRepository.cs" />
+    <Compile Include="Models\Repositories\IGenericRepository.cs" />
+    <Compile Include="Models\Repositories\UnitOfWork.cs" />
+    <Compile Include="Registry.cs" />
     <Compile Include="SearchResult.xaml.cs">
       <DependentUpon>SearchResult.xaml</DependentUpon>
     </Compile>
@@ -144,14 +166,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core\Core.csproj">
-      <Project>{df2b5e5e-7ab8-4534-827e-9243e96cc71f}</Project>
-      <Name>Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DataAccess\DataAccess.csproj">
-      <Project>{8a149d32-e551-41cc-9805-55271a409b57}</Project>
-      <Name>DataAccess</Name>
-    </ProjectReference>
+    <SDKReference Include="Microsoft.VCLibs, Version=14.0">
+      <Name>Visual C++ 2015 Runtime for Universal Windows Platform Apps</Name>
+    </SDKReference>
+    <SDKReference Include="SQLite.UWP.2015, Version=3.13.0">
+      <Name>SQLite for Universal Windows Platform</Name>
+    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

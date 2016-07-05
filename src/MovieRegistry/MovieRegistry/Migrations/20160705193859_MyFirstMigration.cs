@@ -1,58 +1,61 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Microsoft.Data.Entity.Migrations;
+using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace DataAccess.Migrations
+namespace MovieRegistry.Migrations
 {
     public partial class MyFirstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Episode",
+                name: "Episodes",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Autoincrement", true),
                     Season = table.Column<int>(nullable: false),
                     Serie = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Episode", x => x.ID);
+                    table.PrimaryKey("PK_Episodes", x => x.ID);
                 });
+
             migrationBuilder.CreateTable(
-                name: "Movie",
+                name: "Movies",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Autoincrement", true),
                     ImdbID = table.Column<string>(nullable: true),
                     Title = table.Column<string>(nullable: true),
                     Year = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Movie", x => x.ID);
+                    table.PrimaryKey("PK_Movies", x => x.ID);
                 });
+
             migrationBuilder.CreateTable(
-                name: "WindowsUser",
+                name: "Users",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Autoincrement", true),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WindowsUser", x => x.ID);
+                    table.PrimaryKey("PK_Users", x => x.ID);
                 });
+
             migrationBuilder.CreateTable(
-                name: "Record",
+                name: "Records",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Autoincrement", true),
                     EpisodeID = table.Column<int>(nullable: true),
                     IsSeries = table.Column<bool>(nullable: false),
                     MovieID = table.Column<int>(nullable: true),
@@ -61,34 +64,56 @@ namespace DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Record", x => x.ID);
+                    table.PrimaryKey("PK_Records", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Record_Episode_EpisodeID",
+                        name: "FK_Records_Episodes_EpisodeID",
                         column: x => x.EpisodeID,
-                        principalTable: "Episode",
+                        principalTable: "Episodes",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Record_Movie_MovieID",
+                        name: "FK_Records_Movies_MovieID",
                         column: x => x.MovieID,
-                        principalTable: "Movie",
+                        principalTable: "Movies",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Record_WindowsUser_UserID",
+                        name: "FK_Records_Users_UserID",
                         column: x => x.UserID,
-                        principalTable: "WindowsUser",
+                        principalTable: "Users",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Records_EpisodeID",
+                table: "Records",
+                column: "EpisodeID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Records_MovieID",
+                table: "Records",
+                column: "MovieID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Records_UserID",
+                table: "Records",
+                column: "UserID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable("Record");
-            migrationBuilder.DropTable("Episode");
-            migrationBuilder.DropTable("Movie");
-            migrationBuilder.DropTable("WindowsUser");
+            migrationBuilder.DropTable(
+                name: "Records");
+
+            migrationBuilder.DropTable(
+                name: "Episodes");
+
+            migrationBuilder.DropTable(
+                name: "Movies");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

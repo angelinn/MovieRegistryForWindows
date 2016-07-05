@@ -1,14 +1,14 @@
-﻿using DataAccess.Domain;
-using DataAccess.Entities;
-using DataAccess.Repositories;
+﻿using MovieRegistry.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TheTVDBSharp;
-using Core.Extensions;
-using Core.Managers;
+using MovieRegistry.Models.Repositories;
+using MovieRegistry.Models.Domain;
+using MovieRegistry.Managers;
+using MovieRegistry.Extensions;
 
 namespace Core
 {

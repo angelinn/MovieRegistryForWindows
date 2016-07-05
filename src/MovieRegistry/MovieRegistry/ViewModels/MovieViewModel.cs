@@ -1,4 +1,4 @@
-﻿using DataAccess.Domain;
+﻿using MovieRegistry.Models.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;

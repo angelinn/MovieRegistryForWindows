@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Extensions
+namespace MovieRegistry.Extensions
 {
     public static class IEnumerableTakeLast
     {

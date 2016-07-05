@@ -1,6 +1,6 @@
-﻿using DataAccess.Domain;
-using DataAccess.Entities;
-using DataAccess.Repositories;
+﻿using MovieRegistry.Models.Domain;
+using MovieRegistry.Models.Entities;
+using MovieRegistry.Models.Repositories;
 using MovieRegistry.ViewModels;
 using System;
 using System.Collections.Generic;

@@ -1,12 +1,12 @@
-﻿using DataAccess.Entities;
-using Microsoft.Data.Entity;
+﻿using Microsoft.EntityFrameworkCore;
+using MovieRegistry.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess
+namespace MovieRegistry.Models
 {
     public class MovieRegistryContext : DbContext
     {

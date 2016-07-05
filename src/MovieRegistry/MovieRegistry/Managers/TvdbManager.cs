@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using TheTVDBSharp;
 using TheTVDBSharp.Models;
 
-namespace Core.Managers
+namespace MovieRegistry.Managers
 {
     public class TvdbManager
     {

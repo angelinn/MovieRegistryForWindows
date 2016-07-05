@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Repositories
+namespace MovieRegistry.Models.Repositories
 {
     public interface IGenericRepository<T> : IDisposable
     {
