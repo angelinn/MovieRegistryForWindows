@@ -103,9 +103,9 @@
     </Compile>
     <Compile Include="Managers\ImdbManager.cs" />
     <Compile Include="Managers\TvdbManager.cs" />
-    <Compile Include="Migrations\20160705193859_MyFirstMigration.cs" />
-    <Compile Include="Migrations\20160705193859_MyFirstMigration.designer.cs">
-      <DependentUpon>20160705193859_MyFirstMigration.cs</DependentUpon>
+    <Compile Include="Migrations\20160705204504_MyFirstMigrations.cs" />
+    <Compile Include="Migrations\20160705204504_MyFirstMigrations.designer.cs">
+      <DependentUpon>20160705204504_MyFirstMigrations.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\MovieRegistryContextModelSnapshot.cs" />
     <Compile Include="Models\Domain\MovieDO.cs" />

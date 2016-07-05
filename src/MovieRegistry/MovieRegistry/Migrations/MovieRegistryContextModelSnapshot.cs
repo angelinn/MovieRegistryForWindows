@@ -54,11 +54,11 @@ namespace MovieRegistry.Migrations
 
                     b.Property<bool>("IsSeries");
 
-                    b.Property<int?>("MovieID");
+                    b.Property<int>("MovieID");
 
                     b.Property<DateTime?>("SeenAt");
 
-                    b.Property<int?>("UserID");
+                    b.Property<int>("UserID");
 
                     b.HasKey("ID");
 
@@ -91,11 +91,13 @@ namespace MovieRegistry.Migrations
 
                     b.HasOne("MovieRegistry.Models.Entities.Movie", "Movie")
                         .WithMany("Records")
-                        .HasForeignKey("MovieID");
+                        .HasForeignKey("MovieID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("MovieRegistry.Models.Entities.WindowsUser", "User")
                         .WithMany("Records")
-                        .HasForeignKey("UserID");
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
         }
     }

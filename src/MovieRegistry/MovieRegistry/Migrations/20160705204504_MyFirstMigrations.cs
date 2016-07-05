@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MovieRegistry.Migrations
 {
-    public partial class MyFirstMigration : Migration
+    public partial class MyFirstMigrations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -58,9 +58,9 @@ namespace MovieRegistry.Migrations
                         .Annotation("Autoincrement", true),
                     EpisodeID = table.Column<int>(nullable: true),
                     IsSeries = table.Column<bool>(nullable: false),
-                    MovieID = table.Column<int>(nullable: true),
+                    MovieID = table.Column<int>(nullable: false),
                     SeenAt = table.Column<DateTime>(nullable: true),
-                    UserID = table.Column<int>(nullable: true)
+                    UserID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -76,13 +76,13 @@ namespace MovieRegistry.Migrations
                         column: x => x.MovieID,
                         principalTable: "Movies",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Records_Users_UserID",
                         column: x => x.UserID,
                         principalTable: "Users",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

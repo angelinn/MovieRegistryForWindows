@@ -24,6 +24,7 @@ namespace MovieRegistry.Models.Repositories
         {
             try
             {
+                context.Database.EnsureDeleted();
                 context.Database.Migrate();
             }
             catch (InvalidOperationException)

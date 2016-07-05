@@ -9,14 +9,14 @@ namespace MovieRegistry.Models.Domain
 {
     public class RecordDO
     {
-        public static Record Create(bool isSeries, DateTime when, Movie movie, WindowsUser user)
+        public static Record Create(bool isSeries, DateTime when, int movie, WindowsUser user)
         {
             return new Record
             {
                 IsSeries = isSeries,
                 SeenAt = when,
-                Movie = movie,
-                User = user
+                MovieID = movie,
+                UserID = user.ID
             };
         }
     }

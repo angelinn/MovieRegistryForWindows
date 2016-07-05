@@ -47,9 +47,8 @@ namespace MovieRegistry
             using (UnitOfWork uow = new UnitOfWork())
             {
                 Movie movie = MovieDO.FindOrCreate(Search.ImdbID, Search.Title, Search.Year);
-                Record record = RecordDO.Create(false, DateTime.Now, movie, UserDO.GetUser());
-
-                uow.Movies.Add(movie);
+                Record record = RecordDO.Create(false, DateTime.Now, movie.ID, UserDO.GetUser());
+                
                 uow.Records.Add(record);
                 uow.Save();
             }

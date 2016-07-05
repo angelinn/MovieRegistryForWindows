@@ -8,8 +8,8 @@ using MovieRegistry.Models;
 namespace MovieRegistry.Migrations
 {
     [DbContext(typeof(MovieRegistryContext))]
-    [Migration("20160705193859_MyFirstMigration")]
-    partial class MyFirstMigration
+    [Migration("20160705204504_MyFirstMigrations")]
+    partial class MyFirstMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -55,11 +55,11 @@ namespace MovieRegistry.Migrations
 
                     b.Property<bool>("IsSeries");
 
-                    b.Property<int?>("MovieID");
+                    b.Property<int>("MovieID");
 
                     b.Property<DateTime?>("SeenAt");
 
-                    b.Property<int?>("UserID");
+                    b.Property<int>("UserID");
 
                     b.HasKey("ID");
 
@@ -92,11 +92,13 @@ namespace MovieRegistry.Migrations
 
                     b.HasOne("MovieRegistry.Models.Entities.Movie", "Movie")
                         .WithMany("Records")
-                        .HasForeignKey("MovieID");
+                        .HasForeignKey("MovieID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("MovieRegistry.Models.Entities.WindowsUser", "User")
                         .WithMany("Records")
-                        .HasForeignKey("UserID");
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
         }
     }
