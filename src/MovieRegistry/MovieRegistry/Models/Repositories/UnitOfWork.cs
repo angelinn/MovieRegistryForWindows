@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MovieRegistry.Extensions;
 using MovieRegistry.Models.Entities;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,16 @@ namespace MovieRegistry.Models.Repositories
             {
 
             }
+        }
+
+        public void Clear()
+        {
+            context.Movies.Clear();
+            context.Episodes.Clear();
+            context.Records.Clear();
+            context.Users.Clear();
+
+            context.SaveChanges();
         }
 
         public IGenericRepository<Movie> Movies
