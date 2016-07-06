@@ -10,8 +10,6 @@
     <Pivot Name="pvMain" Title="Movie Registry" Background="White">
         <PivotItem Header="{Binding UserName}">
             <Grid>
-                <ProgressRing x:Name="prLatest" HorizontalAlignment="Center" VerticalAlignment="Center" IsActive="True" Height="100" Width="100"/>
-
                 <TextBlock Text="Latest watched:" Foreground="Black" />
                 <ListView x:Name="lvLatest" ItemsSource="{Binding Movies}" Margin="0,30,0,0">
                     <ListView.ItemTemplate>

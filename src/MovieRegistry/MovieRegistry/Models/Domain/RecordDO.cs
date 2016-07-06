@@ -42,7 +42,7 @@ namespace MovieRegistry.Models.Domain
             using (UnitOfWork uow = new UnitOfWork())
             {
                 Record record = uow.Records.Where(r => r.MovieID == movie.ID).First();
-                return uow.Episodes.Where(e => e.ID == record.EpisodeID);
+                return uow.Episodes.Where(e => e.ID == record.EpisodeID).ToList();
             }
         }
 

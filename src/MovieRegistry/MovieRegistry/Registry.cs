@@ -15,22 +15,28 @@ namespace MovieRegistry
 {
     public class Registry
     {
-        public IEnumerable<Tuple<string, IEnumerable<TheTVDBSharp.Models.Episode>>> GetLatestEpisodes()
+        public async Task<IEnumerable<Tuple<string, IEnumerable<TheTVDBSharp.Models.Episode>>>> GetLatestEpisodes()
         {
-            UnitOfWork uow = new UnitOfWork();
-
-            string title = String.Empty;
-            IEnumerable<Record> series = uow.Records.Where(r => r.IsSeries == true);
-            var se = series.GroupBy(s => s.MovieID).Select((pair) =>
+            using (UnitOfWork uow = new UnitOfWork())
             {
-                Movie movie = MovieDO.FindById(pair.Key);
-                Episode last = RecordDO.GetLastEpisode(movie.Title);
-                title = movie.Title;
+                IEnumerable<Record> series = uow.Records.Where(r => r.IsSeries == true);
 
-                return new TvdbManager(movie.Title).CheckForNewEpisodes(last.Season, last.Serie);
-            });
+                var grouped = series.GroupBy(s => s.MovieID);
 
-            return se;
+                var res = new List<Tuple<string, IEnumerable<TheTVDBSharp.Models.Episode>>>();
+                foreach (IGrouping<int, Record> group in grouped)
+                {
+                    Movie movie = MovieDO.FindById(group.Key);
+                    Episode last = RecordDO.GetLastEpisode(movie.Title);
+
+                    TvdbManager tvdb = new TvdbManager(movie.Title);
+                    await tvdb.Load();
+
+                    res.Add(tvdb.CheckForNewEpisodes(last.Season, last.Serie));
+                }
+
+                return res;
+            }
         }
 
         private async Task<bool> EpisodeExists(string title, int season, int episode)

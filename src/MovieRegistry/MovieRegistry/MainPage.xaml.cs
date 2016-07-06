@@ -59,15 +59,12 @@ namespace MovieRegistry
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
         }
 
-        private void MainPage_Loaded(object sender, RoutedEventArgs e)
+        private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             Movies.Clear();
             IEnumerable<LatestViewModel> latest = Registry.Instance.FetchLatest();
             foreach (LatestViewModel m in latest)
                 Movies.Add(m);
-
-
-            prLatest.IsActive = false;
         }
 
         private async void btnSearch_Click(object sender, RoutedEventArgs e)
@@ -138,7 +135,7 @@ namespace MovieRegistry
                 if (lastEpisode == null)
                     message = "You have seen that one!";
                 else
-                    message = String.Format("Last episode you saw was S{0}E{1}", lastEpisode.Season, lastEpisode.Serie);
+                    message = String.Format("Last episode you saw was S{0:D2}E{1:D2}", lastEpisode.Season, lastEpisode.Serie);
             }
 
             MessageDialog dialog = new MessageDialog(message);
