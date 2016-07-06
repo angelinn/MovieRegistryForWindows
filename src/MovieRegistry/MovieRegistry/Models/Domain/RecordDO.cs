@@ -37,11 +37,33 @@ namespace MovieRegistry.Models.Domain
             }
         }
 
-        public static Episode GetEpisodeByMovie(Movie movie)
+        public static IEnumerable<Episode> GetEpisodesByMovie(Movie movie)
         {
             using (UnitOfWork uow = new UnitOfWork())
             {
                 Record record = uow.Records.Where(r => r.MovieID == movie.ID).First();
+                return uow.Episodes.Where(e => e.ID == record.EpisodeID);
+            }
+        }
+
+        public static Episode GetLastEpisode(string title)
+        {
+            Movie movie = MovieDO.FindByTitle(title);
+            return GetEpisodesByMovie(movie).OrderBy(e => e.ID).LastOrDefault();
+        }
+
+        public static Movie GetMovie(Record record)
+        {
+            using (UnitOfWork uow = new UnitOfWork())
+            {
+                return uow.Movies.Where(m => m.ID == record.MovieID).FirstOrDefault();
+            }
+        }
+
+        public static Episode GetEpisode(Record record)
+        {
+            using (UnitOfWork uow = new UnitOfWork())
+            {
                 return uow.Episodes.Where(e => e.ID == record.EpisodeID).FirstOrDefault();
             }
         }

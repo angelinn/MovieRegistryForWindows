@@ -9,79 +9,28 @@ using MovieRegistry.Models.Repositories;
 using MovieRegistry.Models.Domain;
 using MovieRegistry.Managers;
 using MovieRegistry.Extensions;
+using MovieRegistry.ViewModels;
 
-namespace Core
+namespace MovieRegistry
 {
     public class Registry
     {
-        public static Registry GetInstance()
+        public IEnumerable<Tuple<string, IEnumerable<TheTVDBSharp.Models.Episode>>> GetLatestEpisodes()
         {
-            if (instance == null)
-                instance = new Registry();
+            UnitOfWork uow = new UnitOfWork();
 
-            return instance;
-        }
-
-        public void RegisterUser(string name)
-        {
-            using (UnitOfWork uow = new UnitOfWork())
+            string title = String.Empty;
+            IEnumerable<Record> series = uow.Records.Where(r => r.IsSeries == true);
+            var se = series.GroupBy(s => s.MovieID).Select((pair) =>
             {
-                user = uow.Users.Where(u => u.Name == name).FirstOrDefault();
-                if (user == null)
-                {
-                    user = new WindowsUser { Name = name };
-                    uow.Users.Add(user);
-                    uow.Save();
-                }
-            }
-        }
+                Movie movie = MovieDO.FindById(pair.Key);
+                Episode last = RecordDO.GetLastEpisode(movie.Title);
+                title = movie.Title;
 
-        public async Task AddMovie(string title, string seenAt, bool isSeries, int season = 0, int episode = 0)
-        {
-            if (isSeries && !await EpisodeExists(title, season, episode))
-                return;
+                return new TvdbManager(movie.Title).CheckForNewEpisodes(last.Season, last.Serie);
+            });
 
-            // use IMDB here..
-
-            using (UnitOfWork uow = new UnitOfWork())
-            {
-                // Fix it
-                Episode series = null;
-                Movie movie = new Movie { };// imdb data.. };
-                uow.Movies.Add(movie);
-
-                if (isSeries)
-                {
-                    series = new Episode { };//tvdb data.. };
-                    uow.Episodes.Add(series);
-                }
-
-                Record record = new Record
-                {
-                    Movie = movie,
-                    Episode = series,
-                    IsSeries = isSeries,
-                    SeenAt = DateTime.Now,
-                    User = user
-                };
-
-                uow.Records.Add(record);
-                uow.Save();
-            }
-        }
-
-        public IEnumerable<MovieDO> GetLatestEpisodes()
-        {
-            using (UnitOfWork uow = new UnitOfWork())
-            {
-                //IEnumerable<Record> series = user.Records.Where(r => r.IsSeries == true);
-
-                return new List<MovieDO>
-                {
-                    new MovieDO(),
-                    new MovieDO()
-                };
-            }
+            return se;
         }
 
         private async Task<bool> EpisodeExists(string title, int season, int episode)
@@ -92,19 +41,44 @@ namespace Core
             return tvdb.EpisodeExists(season, episode);
         }
 
-        private Dictionary<string, IEnumerable<Record>> FetchLatest()
+        public IEnumerable<LatestViewModel> FetchLatest()
         {
-            return new Dictionary<string, IEnumerable<Record>>
+            using (UnitOfWork uow = new UnitOfWork())
             {
-                { "movies", user.Records.Where(r => r.IsSeries == false).TakeLast(5) },
-                { "series", user.Records.Where(r => r.IsSeries == true).TakeLast(5)  }
-            };
+                IEnumerable<Record> records = uow.Records.All().OrderByDescending(r => r.ID).Take(5);
+                IEnumerable<Movie> movies = records.Select(r => RecordDO.GetMovie(r));
+
+                foreach (Record rec in records)
+                {
+                    Movie m = RecordDO.GetMovie(rec);
+                    Episode e = RecordDO.GetEpisode(rec);
+
+                    yield return new LatestViewModel
+                    {
+                        Title = m.Title,
+                        Year = m.Year,
+                        Season = e == null ? 0 : e.Season,
+                        Serie = e == null ? 0 : e.Serie
+                    };
+                }
+            }
         }
 
         private Registry()
         { }
         
-        private WindowsUser user;
+        public WindowsUser User { get; set; }
+
         private static Registry instance;
+        public static Registry Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new Registry();
+
+                return instance;
+            }
+        }
     }
 }

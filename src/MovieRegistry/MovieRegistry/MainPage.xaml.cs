@@ -33,13 +33,14 @@ namespace MovieRegistry
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public ObservableCollection<MovieViewModel> Movies { get; set; }
+        public ObservableCollection<LatestViewModel> Movies { get; set; }
         public ObservableCollection<SearchResultViewModel> SearchResults { get; set; }
+
         public string UserName
         {
             get
             {
-                return UserDO.GetUser().Name;
+                return Registry.Instance.User == null ? null : Registry.Instance.User.Name;
             }
         }
 
@@ -49,7 +50,7 @@ namespace MovieRegistry
             DataContext = this;
             NavigationCacheMode = NavigationCacheMode.Enabled;
 
-            Movies = new ObservableCollection<MovieViewModel>();
+            Movies = new ObservableCollection<LatestViewModel>();
             SearchResults = new ObservableCollection<SearchResultViewModel>();
 
             UserDO.CreateOrSetUser("Angie");
@@ -60,24 +61,13 @@ namespace MovieRegistry
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            TvdbManager manager = new TvdbManager("Friends");
+            Movies.Clear();
+            IEnumerable<LatestViewModel> latest = Registry.Instance.FetchLatest();
+            foreach (LatestViewModel m in latest)
+                Movies.Add(m);
 
-            try
-            {
-                //await manager.Load();
 
-                Movies.Add(new MovieViewModel());
-                Movies[0].Name = "No new episodes found.";
-            }
-            catch(ServerNotAvailableException)
-            {
-                Movies[0].Name = "Connection not available.";
-            }
-            finally
-            {
-                prLatest.IsActive = false;
-            }
-
+            prLatest.IsActive = false;
         }
 
         private async void btnSearch_Click(object sender, RoutedEventArgs e)
@@ -144,11 +134,11 @@ namespace MovieRegistry
             }
             else
             {
-                EpisodeEntity episode = RecordDO.GetEpisodeByMovie(movie);
-                if (episode == null)
+                EpisodeEntity lastEpisode = RecordDO.GetEpisodesByMovie(movie).LastOrDefault();
+                if (lastEpisode == null)
                     message = "You have seen that one!";
                 else
-                    message = String.Format("Last episode you saw was S{0}E{1}", episode.Season, episode.Serie);
+                    message = String.Format("Last episode you saw was S{0}E{1}", lastEpisode.Season, lastEpisode.Serie);
             }
 
             MessageDialog dialog = new MessageDialog(message);

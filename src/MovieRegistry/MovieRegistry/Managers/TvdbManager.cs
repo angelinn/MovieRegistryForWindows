@@ -16,7 +16,7 @@ namespace MovieRegistry.Managers
             this.imdbID = imdbID;
         }
 
-        public IEnumerable<Episode> CheckForNewEpisodes(int lastSeason, int lastEpisode)
+        public Tuple<string, IEnumerable<Episode>> CheckForNewEpisodes(int lastSeason, int lastEpisode)
         {
             if (HasFinished(lastSeason, lastEpisode))
                 return null;
@@ -25,7 +25,10 @@ namespace MovieRegistry.Managers
             if (current == null)
                 return null;
 
-            return series.Episodes.Where(e => e.FirstAired > current.FirstAired && e.FirstAired < DateTime.Now);
+            return new Tuple<string, IEnumerable<Episode>>(String.Empty, series.Episodes.Where(e =>
+            {
+                return e.FirstAired != null && e.FirstAired > current.FirstAired && e.FirstAired < DateTime.Now;
+            }));
         }
             
         public bool EpisodeExists(int season, int episode)

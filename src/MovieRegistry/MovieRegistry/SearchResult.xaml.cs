@@ -39,10 +39,14 @@ namespace MovieRegistry
         {
             base.OnNavigatedTo(e);
             Search = (SearchResultViewModel)e.Parameter;
-            tvdb = new TvdbManager(Search.Title);
 
             DataContext = Search;
-            await tvdb.Load();
+
+            if (Search.Type != "movie")
+            {
+                tvdb = new TvdbManager(Search.Title);
+                await tvdb.Load();
+            }
         }
 
         private async void btnAddEntry_Click(object sender, RoutedEventArgs e)
@@ -65,7 +69,7 @@ namespace MovieRegistry
 
             Movie movie = MovieDO.FindOrCreate(Search.ImdbID, Search.Title, Search.Year);
 
-            bool created = RecordDO.TryCreate(isSeries, DateTime.Now, movie, UserDO.GetUser(), episode);
+            bool created = RecordDO.TryCreate(isSeries, DateTime.Now, movie, Registry.Instance.User, episode);
 
             string message = created ? String.Format("{0} successfully added at {1}.", Search.Title, DateTime.Now)
                                      : String.Format("{0} already exists!", Search.Title);

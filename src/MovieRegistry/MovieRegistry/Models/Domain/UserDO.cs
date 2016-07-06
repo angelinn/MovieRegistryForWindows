@@ -16,13 +16,13 @@ namespace MovieRegistry.Models.Domain
             {
                 using (UnitOfWork uow = new UnitOfWork())
                 {
-                    user = uow.Users.Where(u => u.Name == name).FirstOrDefault();
-                    if (user == null)
+                    Registry.Instance.User = uow.Users.Where(u => u.Name == name).FirstOrDefault();
+                    if (Registry.Instance.User == null)
                     {
-                        user = new WindowsUser { Name = name };
-                        uow.Users.Add(user);
+                        Registry.Instance.User = new WindowsUser { Name = name };
+                        uow.Users.Add(Registry.Instance.User);
                         uow.Save();
-
+                        
                         return true;
                     }
                 }
@@ -33,12 +33,5 @@ namespace MovieRegistry.Models.Domain
                 return false;
             }
         }
-
-        public static WindowsUser GetUser()
-        {
-            return user;
-        }
-
-        private static WindowsUser user;
     }
 }

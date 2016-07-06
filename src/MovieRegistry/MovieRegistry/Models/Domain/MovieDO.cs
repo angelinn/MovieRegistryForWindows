@@ -34,6 +34,14 @@ namespace MovieRegistry.Models.Domain
             }
         }
 
+        public static Movie FindById(int id)
+        {
+            using (UnitOfWork uow = new UnitOfWork())
+            {
+                return uow.Movies.FindById(id);
+            }
+        }
+
         public string Name
         {
             get
