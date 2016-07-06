@@ -17,7 +17,7 @@ namespace MovieRegistry.Managers
             this.imdbID = imdbID;
         }
 
-        public Tuple<string, IEnumerable<Episode>> CheckForNewEpisodes(int lastSeason, int lastEpisode)
+        public Tuple<string, IEnumerable<Episode>> CheckForNewEpisodes(string title, int lastSeason, int lastEpisode)
         {
             if (HasFinished(lastSeason, lastEpisode))
                 return null;
@@ -26,7 +26,7 @@ namespace MovieRegistry.Managers
             if (current == null)
                 return null;
 
-            return new Tuple<string, IEnumerable<Episode>>(String.Empty, series.Episodes.Where(e =>
+            return new Tuple<string, IEnumerable<Episode>>(title, series.Episodes.Where(e =>
             {
                 return e.FirstAired != null && e.FirstAired > current.FirstAired && e.FirstAired < DateTime.Now;
             }));

@@ -32,7 +32,7 @@ namespace MovieRegistry
                     TvdbManager tvdb = new TvdbManager(movie.Title);
                     await tvdb.Load();
 
-                    res.Add(tvdb.CheckForNewEpisodes(last.Season, last.Serie));
+                    res.Add(tvdb.CheckForNewEpisodes(movie.Title, last.Season, last.Serie));
                 }
 
                 return res;

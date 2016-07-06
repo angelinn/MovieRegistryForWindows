@@ -20,7 +20,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Button Name="btnNewEpisodes" Content="Check for new episodes!" VerticalAlignment="Bottom" Margin="0,0,0,50" />
+                <Button Name="btnNewEpisodes" Content="Check for new episodes!" VerticalAlignment="Bottom" Margin="0,0,0,50" Click="btnNewEpisodes_Click" />
             </Grid>
         </PivotItem>
         <PivotItem Header="Add entry">

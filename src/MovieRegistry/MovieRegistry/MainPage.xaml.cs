@@ -59,7 +59,7 @@ namespace MovieRegistry
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
         }
 
-        private async void MainPage_Loaded(object sender, RoutedEventArgs e)
+        private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             Movies.Clear();
             IEnumerable<LatestViewModel> latest = Registry.Instance.FetchLatest();
@@ -140,6 +140,11 @@ namespace MovieRegistry
 
             MessageDialog dialog = new MessageDialog(message);
             await dialog.ShowAsync();
+        }
+
+        private void btnNewEpisodes_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(NewEpisodes));
         }
     }
 }
