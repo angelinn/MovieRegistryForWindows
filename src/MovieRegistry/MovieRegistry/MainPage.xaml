@@ -10,7 +10,7 @@
     <Pivot Name="pvMain" Title="Movie Registry" Background="White">
         <PivotItem Header="{Binding UserName}">
             <Grid>
-                <TextBlock Text="Latest watched:" Foreground="Black" />
+                <TextBlock Text="Loading database.." Foreground="Black" Name="txtStatus" />
                 <ProgressRing x:Name="prDatabase" HorizontalAlignment="Center" VerticalAlignment="Center" Height="100" Width="100" IsActive="True"/>
                 <ListView x:Name="lvLatest" ItemsSource="{Binding Movies}" Margin="0,30,0,0">
                     <ListView.ItemTemplate>
@@ -21,7 +21,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Button Name="btnNewEpisodes" Content="Check for new episodes!" VerticalAlignment="Bottom" Margin="0,0,0,50" Click="btnNewEpisodes_Click" />
+                <Button Name="btnNewEpisodes" Content="Check for new episodes!" VerticalAlignment="Bottom" Margin="0,0,0,50" Click="btnNewEpisodes_Click" Visibility="Collapsed" />
             </Grid>
         </PivotItem>
         <PivotItem Header="Add entry">

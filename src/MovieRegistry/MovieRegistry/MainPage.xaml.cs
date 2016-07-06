@@ -78,6 +78,9 @@ namespace MovieRegistry
 
             prDatabase.IsActive = false;
             prDatabase.Visibility = Visibility.Collapsed;
+
+            txtStatus.Text = "Latest watched:";
+            btnNewEpisodes.Visibility = Visibility.Visible;
         }
 
         private async void btnSearch_Click(object sender, RoutedEventArgs e)

@@ -38,7 +38,6 @@ namespace MovieRegistry.Models.Repositories
             context.Movies.Clear();
             context.Episodes.Clear();
             context.Records.Clear();
-            context.Users.Clear();
 
             context.SaveChanges();
         }
