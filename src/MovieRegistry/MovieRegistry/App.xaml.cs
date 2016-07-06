@@ -31,11 +31,6 @@ namespace MovieRegistry
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-
-            using (UnitOfWork uow = new UnitOfWork())
-            {
-                uow.Migrate();
-            }
         }
 
         /// <summary>

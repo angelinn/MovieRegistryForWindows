@@ -11,6 +11,7 @@
         <PivotItem Header="{Binding UserName}">
             <Grid>
                 <TextBlock Text="Latest watched:" Foreground="Black" />
+                <ProgressRing x:Name="prDatabase" HorizontalAlignment="Center" VerticalAlignment="Center" Height="100" Width="100" IsActive="True"/>
                 <ListView x:Name="lvLatest" ItemsSource="{Binding Movies}" Margin="0,30,0,0">
                     <ListView.ItemTemplate>
                         <DataTemplate>

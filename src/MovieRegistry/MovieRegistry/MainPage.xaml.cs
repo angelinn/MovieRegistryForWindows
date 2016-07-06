@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using TheTVDBSharp.Models;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -54,18 +55,29 @@ namespace MovieRegistry
             Movies = new ObservableCollection<LatestViewModel>();
             SearchResults = new ObservableCollection<SearchResultViewModel>();
 
-            UserDO.CreateOrSetUser("Angie");
-
             Loaded += MainPage_Loaded;
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
         }
 
-        private void MainPage_Loaded(object sender, RoutedEventArgs e)
+        private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
+            await Task.Run(() =>
+            {
+                using (UnitOfWork uow = new UnitOfWork())
+                {
+                    uow.Migrate();
+                }
+            });
+
+            UserDO.CreateOrSetUser("Angie");
+
             Movies.Clear();
             IEnumerable<LatestViewModel> latest = Registry.Instance.FetchLatest();
             foreach (LatestViewModel m in latest)
                 Movies.Add(m);
+
+            prDatabase.IsActive = false;
+            prDatabase.Visibility = Visibility.Collapsed;
         }
 
         private async void btnSearch_Click(object sender, RoutedEventArgs e)
