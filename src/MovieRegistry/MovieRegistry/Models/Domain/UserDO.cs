@@ -17,7 +17,7 @@ namespace MovieRegistry.Models.Domain
                 using (UnitOfWork uow = new UnitOfWork())
                 {
                     IEnumerable<WindowsUser> users = uow.Users.Where(u => u.Name == name);
-                    Registry.Instance.User = users.Count() == 1 ? users.ToList()[0] : null;
+                    Registry.Instance.User = users.FirstOrDefault();// users.Count() == 1 ? users.ToList()[0] : null;
 
                     if (Registry.Instance.User == null)
                     {

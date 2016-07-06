@@ -8,7 +8,7 @@
     mc:Ignorable="d">
     
     <Pivot Name="pvMain" Title="Movie Registry" Background="White">
-        <PivotItem Header="{Binding UserName}">
+        <PivotItem Header="{Binding UserName.Content}">
             <Grid>
                 <TextBlock Text="Loading database.." Foreground="Black" Name="txtStatus" />
                 <ProgressRing x:Name="prDatabase" HorizontalAlignment="Center" VerticalAlignment="Center" Height="100" Width="100" IsActive="True"/>

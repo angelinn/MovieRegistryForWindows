@@ -37,14 +37,7 @@ namespace MovieRegistry
     {
         public ObservableCollection<LatestViewModel> Movies { get; set; }
         public ObservableCollection<SearchResultViewModel> SearchResults { get; set; }
-
-        public string UserName
-        {
-            get
-            {
-                return Registry.Instance.User == null ? null : Registry.Instance.User.Name;
-            }
-        }
+        public StringViewModel UserName { get; set; }
 
         public MainPage()
         {
@@ -54,6 +47,7 @@ namespace MovieRegistry
 
             Movies = new ObservableCollection<LatestViewModel>();
             SearchResults = new ObservableCollection<SearchResultViewModel>();
+            UserName = new StringViewModel { Content = "Loading" };
 
             Loaded += MainPage_Loaded;
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
@@ -75,6 +69,8 @@ namespace MovieRegistry
             IEnumerable<LatestViewModel> latest = Registry.Instance.FetchLatest();
             foreach (LatestViewModel m in latest)
                 Movies.Add(m);
+
+            UserName.Content = Registry.Instance.User.Name;
 
             prDatabase.IsActive = false;
             prDatabase.Visibility = Visibility.Collapsed;
