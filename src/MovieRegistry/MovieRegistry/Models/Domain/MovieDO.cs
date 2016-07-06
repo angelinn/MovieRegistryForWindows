@@ -17,7 +17,12 @@ namespace MovieRegistry.Models.Domain
                 Movie movie = uow.Movies.Where(m => m.ImdbID == imdbId).FirstOrDefault();
                 if (movie == null)
                 {
-                    movie = new Movie { ImdbID = imdbId, Title = title, Year = Int32.Parse(year) };
+                    movie = new Movie { ImdbID = imdbId, Title = title };
+
+                    int y;
+                    if (Int32.TryParse(year, out y))
+                        movie.Year = y;
+
                     uow.Movies.Add(movie);
                     uow.Save();
                 }

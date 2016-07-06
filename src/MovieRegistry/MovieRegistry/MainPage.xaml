@@ -28,7 +28,7 @@
                 <TextBlock Text="Search for a movie or a show" />
                 <TextBox Name="txtEntryName"  KeyUp="txtEntryName_KeyUp"/>
 
-                <Button Name="btnSearch" Click="btnSearch_Click" Content="Go!" Margin="0,15,0,15"></Button>
+                <Button Name="btnSearch" Click="btnSearch_Click" Content="Go!" Margin="0,15,0,15" />
 
                 <ProgressRing x:Name="prSearch" HorizontalAlignment="Center" VerticalAlignment="Center" Height="100" Width="100"/>
 
@@ -50,7 +50,9 @@
                        TextWrapping="Wrap" />
 
                 <TextBox Name="txtDidISee" Margin="0,15,0,0" />
-                <Button Name="btnDidISee" Margin="0,15,0,0" Content="Check" Click="btnDidISee_Click"/>
+                <Button Name="btnDidISee" Margin="0,15,0,40" Content="Check" Click="btnDidISee_Click"/>
+
+                <Button Name="btnClearData" Content="Clear all data" Click="btnClearData_Click" />
             </StackPanel>
         </PivotItem>
     </Pivot>

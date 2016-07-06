@@ -1,6 +1,7 @@
 ﻿using MovieRegistry.Managers;
 using MovieRegistry.Models.Domain;
 using MovieRegistry.Models.Entities;
+using MovieRegistry.Models.Repositories;
 using MovieRegistry.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -145,6 +146,15 @@ namespace MovieRegistry
         private void btnNewEpisodes_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(NewEpisodes));
+        }
+
+        private void btnClearData_Click(object sender, RoutedEventArgs e)
+        {
+            using (UnitOfWork uow = new UnitOfWork())
+            {
+                uow.Clear();
+            }
+            Movies.Clear();
         }
     }
 }
