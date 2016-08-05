@@ -1,5 +1,8 @@
 # MovieRegistry For Windows
 
+[![Build status](https://ci.appveyor.com/api/projects/status/34d3lbafsw1q0rv7?svg=true)](https://ci.appveyor.com/project/betrakiss/movieregistryforwindows)
+
+
 ### MovieRegistryForWindows is a Universal Windows Application, created for the Mobile Applications course at FMI, Sofia. 
 #### It is a Windows version of my MovieRegistry project, first written in Ruby https://github.com/betrakiss/MovieRegistry
 #### It is not yet ready for the Windows Store.
