@@ -41,8 +41,12 @@ namespace MovieRegistry.Models.Domain
         {
             using (UnitOfWork uow = new UnitOfWork())
             {
-                Record record = uow.Records.Where(r => r.MovieID == movie.ID).First();
-                return uow.Episodes.Where(e => e.ID == record.MovieID).ToList();
+                List<List<Episode>> episodes = new List<List<Episode>>();
+                foreach(Record record in uow.Records.Where(r => r.MovieID == movie.ID))
+                {
+                    episodes.Add(uow.Episodes.Where(e => e.ID == record.EpisodeID).ToList());
+                }
+                return episodes.SelectMany(l => l);
             }
         }
 
